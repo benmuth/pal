@@ -167,8 +167,6 @@ void pal_edit_refresh(PalEvent* event, GDate *d)
 
 void pal_edit_event(PalEvent* event, GDate *d)
 {
-    PalEvent *newevent = pal_event_copy(event);
-
     pal_edit_init();
 
 

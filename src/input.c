@@ -43,7 +43,7 @@ static gboolean should_be_expunged(const PalEvent* pal_event)
 
     today = g_date_new();
     event_day = get_date(pal_event->date_string);
-    g_date_set_time(today, time(NULL));
+    g_date_set_time_t(today, time(NULL));
 
     /* if not a yyyymmdd (ie, not recurring) */
     if(event_day == NULL)
@@ -100,7 +100,7 @@ static PalTime* pal_input_get_time(gchar* s, gint n)
 
 	    /* get the minutes digits */
 	    m2 = g_utf8_find_next_char(s, NULL);
-	    if(m2 == '\0')
+	    if(*m2 == '\0')
 		return NULL;  /* hit end of line, done */
 	    m1 = g_utf8_find_next_char(m2, NULL);
 
@@ -314,7 +314,7 @@ PalEvent* pal_input_read_event(FILE* file, FILE* out_file, gchar* filename, PalE
     {
 	gchar* file = g_path_get_basename(filename);
         pal_event->start_date = g_date_new();
-        g_date_set_time(pal_event->start_date, time(NULL));
+        g_date_set_time_t(pal_event->start_date, time(NULL));
         pal_event->end_date = g_date_new_dmy(1,1,3000);
 
         pal_output_error(_("ERROR: Event with count has no start date\n"));

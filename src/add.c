@@ -175,6 +175,7 @@ static gchar* pal_add_get_recur(GDate* date)
 
     gint x,y;
     getyx( stdscr, y, x );
+    (void)x;
     
     pal_output_fg(BRIGHT, GREEN, "> ");
     g_print(_("Select how often this event occurs\n"));
@@ -202,6 +203,7 @@ static gchar* pal_add_get_recur(GDate* date)
 
 	gint promptx,prompty;
 	getyx( stdscr, prompty, promptx );
+	(void)promptx;
 
         selection = pal_rl_get_line(_("Select type: "), prompty, 0);
 
@@ -289,6 +291,7 @@ static gchar* pal_add_get_file(void)
 
     int y,x;
     getyx( stdscr, y, x );
+    (void)x;
     
     /* get the filename */
     do

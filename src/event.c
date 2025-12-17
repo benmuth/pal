@@ -152,7 +152,7 @@ static gboolean is_valid_todo(const gchar* date_string)
 static gboolean get_key_todo(const GDate* date, gchar *buffer)
 {
     GDate* today = g_date_new();
-    g_date_set_time(today, time(NULL));
+    g_date_set_time_t(today, time(NULL));
     if(g_date_days_between(today, date) != 0)
     {
 	g_date_free(today);
@@ -228,7 +228,7 @@ static gboolean is_valid_yyyymmdd(const gchar* date_string)
 
 static gboolean get_key_yyyymmdd(const GDate* date, gchar *buffer)
 {
-    snprintf(buffer, 9, "%04d%02d%02d", g_date_get_year(date),
+    snprintf(buffer, 12, "%04d%02d%02d", g_date_get_year(date),
 	    g_date_get_month(date), g_date_get_day(date));
     return TRUE;
 }
@@ -348,7 +348,7 @@ static gchar *get_descr_0000mmdd(const GDate* date)
     char buf1[128];
     char buf2[128];
     g_date_strftime(buf1, 128, "%B", date);
-    snprintf( buf2, 128, "Annually: %d %s", g_date_get_day(date), buf1 );
+    snprintf( buf2, 142, "Annually: %d %s", g_date_get_day(date), buf1 );
     return g_strdup(buf2);
 }
 
@@ -392,7 +392,7 @@ static gchar *get_descr_star_00nd(const GDate* date)
     char buf2[128];
     pal_add_suffix(get_nth_day(date), suffix, 16);
     g_date_strftime(buf1, 128, "%A", date);
-    snprintf(buf2, 128, "Monthly: The %s %s of every month",
+    snprintf(buf2, 172, "Monthly: The %s %s of every month",
                         suffix, buf1);
     return g_strdup(buf2);
 }
@@ -439,7 +439,7 @@ static gchar *get_descr_star_mmnd(const GDate* date)
     pal_add_suffix(get_nth_day(date), suffix, 16);
     g_date_strftime(buf1, 128, "%A", date);
     g_date_strftime(buf2, 128, "%B", date);
-    snprintf(buf3, 128, "Annually: The %s %s of every %s",
+    snprintf(buf3, 295, "Annually: The %s %s of every %s",
                         suffix, buf1, buf2);
     return g_strdup(buf3);
 }
@@ -487,7 +487,7 @@ static gchar *get_descr_star_00Ld(const GDate* date)
         return NULL;
 
     g_date_strftime(buf1, 128, "%A", date);
-    snprintf(buf2, 128, "Monthly: The last %s of every month",
+    snprintf(buf2, 161, "Monthly: The last %s of every month",
                         buf1);
     return g_strdup(buf2);
 }
@@ -540,7 +540,7 @@ static gchar *get_descr_star_mmLd(const GDate* date)
 
     g_date_strftime(buf1, 128, "%A", date);
     g_date_strftime(buf2, 128, "%B", date);
-    snprintf(buf3, 128, "Annually: The last %s of every %s",
+    snprintf(buf3, 284, "Annually: The last %s of every %s",
                         buf1, buf2);
     return g_strdup(buf3);
 }
@@ -584,7 +584,6 @@ gboolean parse_event( PalEvent *event, const gchar* date_string)
 
     int count = 1;
     int i;
-    PalPeriodic period = PAL_ONCEONLY;
 
     s = g_strsplit(date_string, ":", 3);
 
@@ -608,7 +607,6 @@ gboolean parse_event( PalEvent *event, const gchar* date_string)
         {
             if( PalEventTypes[i].valid_string( s[0] ) )
             {
-                period = PalEventTypes[i].period;
                 break;
             }
         }
@@ -672,7 +670,7 @@ static gboolean get_key_EASTER(const GDate* date, gchar *buffer)
     g_date_free(easter);
 
     if(diff != 0)
-	snprintf(buffer, 12, "EASTER%c%03d", (diff > 0) ? '-' : '+', (diff > 0) ? diff : -diff);
+	snprintf(buffer, 18, "EASTER%c%03d", (diff > 0) ? '-' : '+', (diff > 0) ? diff : -diff);
     else
 	snprintf(buffer, 12, "EASTER");
 
@@ -701,7 +699,7 @@ gchar* get_key(const GDate* date)
 {
     gchar* key = g_malloc(sizeof(gchar)*9);
 
-    snprintf(key, 9, "%04d%02d%02d", g_date_get_year(date),
+    snprintf(key, 20, "%04d%02d%02d", g_date_get_year(date),
 	    g_date_get_month(date), g_date_get_day(date));
     return key;
 }
@@ -729,7 +727,7 @@ GDate* get_date(const gchar* key)
 
 static gboolean last_weekday_of_month(const GDate* date)
 {
-    GDate* local = g_memdup(date,sizeof(GDate));
+    GDate* local = g_memdup2(date,sizeof(GDate));
 
     g_date_add_days(local,7);
     if(g_date_get_month(local) != g_date_get_month(date))
