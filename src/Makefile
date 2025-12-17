@@ -197,6 +197,11 @@ pot: $(SRC)
 	@mv ../po/pal.pot.tmp ../po/pal.pot
 
 
+# Generate compile_commands.json for LSP (clangd)
+compile_commands.json:
+	@echo "Generating compile_commands.json for LSP..."
+	@./generate_compile_commands.sh > compile_commands.json
+
 # Remove binay, object files and emacs backup files
 clean:
 	rm -rf $(NAME) libpal.a tmp.opt tmp.debug *.o *~
