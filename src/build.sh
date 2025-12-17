@@ -13,10 +13,10 @@ VERSION="0.4.2"
 
 # Compiler flags
 if [[ $DEBUG -eq 1 ]]; then
-    CFLAGS="-g -Wall -pedantic -Wstrict-prototypes -DG_DISABLE_DEPRECATED -DDEBUG"
+    CFLAGS="-g -fsanitize=address,leak,undefined -Wall -pedantic -Wstrict-prototypes -DG_DISABLE_DEPRECATED -DDEBUG"
     echo "Building in DEBUG mode..."
 else
-    CFLAGS="-O2 -Wall"
+    CFLAGS="-O3 -Wall"
     echo "Building in OPTIMIZED mode..."
 fi
 
@@ -29,7 +29,7 @@ SOURCES="main.c colorize.c output.c input.c event.c rl.c html.c latex.c add.c ed
 
 # Compile and link in one step
 echo "Compiling..."
-gcc $CFLAGS \
+clang $CFLAGS \
     -I${PREFIX}/include \
     $GLIB_CFLAGS \
     -DPAL_VERSION=\"$VERSION\" \

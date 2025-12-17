@@ -9,3 +9,15 @@ time ./build.sh --debug
 Executed in    4.78 secs    fish           external
    usr time    4.08 secs    0.13 millis    4.08 secs
    sys time    0.69 secs    2.10 millis    0.68 secs
+
+Wed Dec 17 12:50:27 CST 2025
+
+time ./build.sh
+Executed in    8.25 secs    fish           external
+   usr time    7.60 secs    0.44 millis    7.60 secs
+   sys time    0.65 secs    1.75 millis    0.65 secs
+
+time ./build.sh --debug
+Executed in    7.38 secs    fish           external
+   usr time    6.57 secs    0.93 millis    6.57 secs
+   sys time    0.78 secs    1.99 millis    0.78 secs
