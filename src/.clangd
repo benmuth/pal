@@ -1,0 +1,38 @@
+---
+# clangd configuration for pal
+
+CompileFlags:
+  # Add include paths that might not be in compile_commands.json
+  Add:
+    - -I/usr/include/glib-2.0
+    - -I/usr/lib/glib-2.0/include
+    - -I/usr/include/sysprof-6
+    - -I/usr/include/ncurses
+    - -I/usr/include/readline
+    - -pthread
+  # Remove flags that clangd doesn't understand
+  Remove:
+    - -M*              # Dependency generation flags
+    - -O*              # Optimization flags (clangd uses -O0)
+
+Diagnostics:
+  # Suppress warnings about deprecated GLib functions
+  # We keep them for compatibility with older systems
+  Suppress:
+    - deprecated-declarations
+  # Don't warn about unused parameters (common in callback functions)
+  UnusedIncludes: None
+  MissingIncludes: Strict
+
+Index:
+  Background: Build
+  StandardLibrary: Yes
+
+InlayHints:
+  Enabled: Yes
+  ParameterNames: Yes
+  DeducedTypes: No
+  Designators: Yes
+
+Hover:
+  ShowAKA: Yes

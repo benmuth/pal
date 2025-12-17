@@ -1,0 +1,72 @@
+[
+  {
+    "directory": "/home/ben/code/pal/src",
+    "command": "gcc -O2 -Wall -I/home/ben/.local/include -I/usr/include/glib-2.0 -I/usr/lib/glib-2.0/include -I/usr/include/sysprof-6 -pthread -DPAL_VERSION=\"0.4.2\" -DPREFIX=\"/home/ben/.local\" -c main.c -o tmp.opt/main.o",
+    "file": "/home/ben/code/pal/src/main.c"
+  },
+  {
+    "directory": "/home/ben/code/pal/src",
+    "command": "gcc -O2 -Wall -I/home/ben/.local/include -I/usr/include/glib-2.0 -I/usr/lib/glib-2.0/include -I/usr/include/sysprof-6 -pthread -DPAL_VERSION=\"0.4.2\" -DPREFIX=\"/home/ben/.local\" -c colorize.c -o tmp.opt/colorize.o",
+    "file": "/home/ben/code/pal/src/colorize.c"
+  },
+  {
+    "directory": "/home/ben/code/pal/src",
+    "command": "gcc -O2 -Wall -I/home/ben/.local/include -I/usr/include/glib-2.0 -I/usr/lib/glib-2.0/include -I/usr/include/sysprof-6 -pthread -DPAL_VERSION=\"0.4.2\" -DPREFIX=\"/home/ben/.local\" -c output.c -o tmp.opt/output.o",
+    "file": "/home/ben/code/pal/src/output.c"
+  },
+  {
+    "directory": "/home/ben/code/pal/src",
+    "command": "gcc -O2 -Wall -I/home/ben/.local/include -I/usr/include/glib-2.0 -I/usr/lib/glib-2.0/include -I/usr/include/sysprof-6 -pthread -DPAL_VERSION=\"0.4.2\" -DPREFIX=\"/home/ben/.local\" -c input.c -o tmp.opt/input.o",
+    "file": "/home/ben/code/pal/src/input.c"
+  },
+  {
+    "directory": "/home/ben/code/pal/src",
+    "command": "gcc -O2 -Wall -I/home/ben/.local/include -I/usr/include/glib-2.0 -I/usr/lib/glib-2.0/include -I/usr/include/sysprof-6 -pthread -DPAL_VERSION=\"0.4.2\" -DPREFIX=\"/home/ben/.local\" -c event.c -o tmp.opt/event.o",
+    "file": "/home/ben/code/pal/src/event.c"
+  },
+  {
+    "directory": "/home/ben/code/pal/src",
+    "command": "gcc -O2 -Wall -I/home/ben/.local/include -I/usr/include/glib-2.0 -I/usr/lib/glib-2.0/include -I/usr/include/sysprof-6 -pthread -DPAL_VERSION=\"0.4.2\" -DPREFIX=\"/home/ben/.local\" -c rl.c -o tmp.opt/rl.o",
+    "file": "/home/ben/code/pal/src/rl.c"
+  },
+  {
+    "directory": "/home/ben/code/pal/src",
+    "command": "gcc -O2 -Wall -I/home/ben/.local/include -I/usr/include/glib-2.0 -I/usr/lib/glib-2.0/include -I/usr/include/sysprof-6 -pthread -DPAL_VERSION=\"0.4.2\" -DPREFIX=\"/home/ben/.local\" -c html.c -o tmp.opt/html.o",
+    "file": "/home/ben/code/pal/src/html.c"
+  },
+  {
+    "directory": "/home/ben/code/pal/src",
+    "command": "gcc -O2 -Wall -I/home/ben/.local/include -I/usr/include/glib-2.0 -I/usr/lib/glib-2.0/include -I/usr/include/sysprof-6 -pthread -DPAL_VERSION=\"0.4.2\" -DPREFIX=\"/home/ben/.local\" -c latex.c -o tmp.opt/latex.o",
+    "file": "/home/ben/code/pal/src/latex.c"
+  },
+  {
+    "directory": "/home/ben/code/pal/src",
+    "command": "gcc -O2 -Wall -I/home/ben/.local/include -I/usr/include/glib-2.0 -I/usr/lib/glib-2.0/include -I/usr/include/sysprof-6 -pthread -DPAL_VERSION=\"0.4.2\" -DPREFIX=\"/home/ben/.local\" -c add.c -o tmp.opt/add.o",
+    "file": "/home/ben/code/pal/src/add.c"
+  },
+  {
+    "directory": "/home/ben/code/pal/src",
+    "command": "gcc -O2 -Wall -I/home/ben/.local/include -I/usr/include/glib-2.0 -I/usr/lib/glib-2.0/include -I/usr/include/sysprof-6 -pthread -DPAL_VERSION=\"0.4.2\" -DPREFIX=\"/home/ben/.local\" -c edit.c -o tmp.opt/edit.o",
+    "file": "/home/ben/code/pal/src/edit.c"
+  },
+  {
+    "directory": "/home/ben/code/pal/src",
+    "command": "gcc -O2 -Wall -I/home/ben/.local/include -I/usr/include/glib-2.0 -I/usr/lib/glib-2.0/include -I/usr/include/sysprof-6 -pthread -DPAL_VERSION=\"0.4.2\" -DPREFIX=\"/home/ben/.local\" -c del.c -o tmp.opt/del.o",
+    "file": "/home/ben/code/pal/src/del.c"
+  },
+  {
+    "directory": "/home/ben/code/pal/src",
+    "command": "gcc -O2 -Wall -I/home/ben/.local/include -I/usr/include/glib-2.0 -I/usr/lib/glib-2.0/include -I/usr/include/sysprof-6 -pthread -DPAL_VERSION=\"0.4.2\" -DPREFIX=\"/home/ben/.local\" -c remind.c -o tmp.opt/remind.o",
+    "file": "/home/ben/code/pal/src/remind.c"
+  },
+  {
+    "directory": "/home/ben/code/pal/src",
+    "command": "gcc -O2 -Wall -I/home/ben/.local/include -I/usr/include/glib-2.0 -I/usr/lib/glib-2.0/include -I/usr/include/sysprof-6 -pthread -DPAL_VERSION=\"0.4.2\" -DPREFIX=\"/home/ben/.local\" -c search.c -o tmp.opt/search.o",
+    "file": "/home/ben/code/pal/src/search.c"
+  },
+  {
+    "directory": "/home/ben/code/pal/src",
+    "command": "gcc -O2 -Wall -I/home/ben/.local/include -I/usr/include/glib-2.0 -I/usr/lib/glib-2.0/include -I/usr/include/sysprof-6 -pthread -DPAL_VERSION=\"0.4.2\" -DPREFIX=\"/home/ben/.local\" -c manage.c -o tmp.opt/manage.o",
+    "file": "/home/ben/code/pal/src/manage.c"
+  }
+]
