@@ -33,7 +33,7 @@ static gboolean last_weekday_of_month(const GDate* date);
 /* Currently in add.c, should be moved at some stage */
 void pal_add_suffix(gint number, gchar* suffix, gint buf_size);
 
-PalEvent* pal_event_init()
+PalEvent* pal_event_init(void)
 {
     PalEvent* event = g_malloc(sizeof(PalEvent));
     event->text = NULL;
@@ -346,7 +346,7 @@ static gboolean get_key_0000mmdd(const GDate* date, gchar* buffer)
 static gchar *get_descr_0000mmdd(const GDate* date)
 {
     char buf1[128];
-    char buf2[128];
+    char buf2[142];
     g_date_strftime(buf1, 128, "%B", date);
     snprintf( buf2, 142, "Annually: %d %s", g_date_get_day(date), buf1 );
     return g_strdup(buf2);
@@ -389,7 +389,7 @@ static gchar *get_descr_star_00nd(const GDate* date)
 {
     char suffix[16];
     char buf1[128];
-    char buf2[128];
+    char buf2[172];
     pal_add_suffix(get_nth_day(date), suffix, 16);
     g_date_strftime(buf1, 128, "%A", date);
     snprintf(buf2, 172, "Monthly: The %s %s of every month",
@@ -435,7 +435,7 @@ static gchar *get_descr_star_mmnd(const GDate* date)
     char suffix[16];
     char buf1[128];
     char buf2[128];
-    char buf3[128];
+    char buf3[295];
     pal_add_suffix(get_nth_day(date), suffix, 16);
     g_date_strftime(buf1, 128, "%A", date);
     g_date_strftime(buf2, 128, "%B", date);
@@ -482,7 +482,7 @@ static gboolean get_key_star_00Ld(const GDate* date, gchar* buffer)
 static gchar *get_descr_star_00Ld(const GDate* date)
 {
     char buf1[128];
-    char buf2[128];
+    char buf2[161];
     if( !last_weekday_of_month(date) )
         return NULL;
 
@@ -534,7 +534,7 @@ static gchar *get_descr_star_mmLd(const GDate* date)
 {
     char buf1[128];
     char buf2[128];
-    char buf3[128];
+    char buf3[284];
     if( !last_weekday_of_month(date) )
         return NULL;
 

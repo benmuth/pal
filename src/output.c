@@ -243,7 +243,7 @@ static void pal_output_text_week(GDate* date, gboolean force_month_label,
 		pal_output_fg(BRIGHT, color, utf8_buf);
 	}
 	else
-	    g_print(utf8_buf);
+	    g_print("%s", utf8_buf);
 
 
 	if(g_date_compare(date,today) == 0)	/* make today bright */
@@ -264,7 +264,7 @@ static void pal_output_text_week(GDate* date, gboolean force_month_label,
 
 	}
 	else
-	    g_print(utf8_buf);
+	    g_print("%s", utf8_buf);
 
 
 	/* print extra space between days */

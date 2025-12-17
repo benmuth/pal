@@ -114,7 +114,7 @@ gchar* pal_edit_get_field_val(int i, PalEvent *event, GDate *d)
 
 }
 
-void pal_edit_init()
+void pal_edit_init(void)
 {
     PalViewEvent initfieldlist[NUM_FIELDS] = {
 	{ _("Event Description"), TRUE, FALSE },

@@ -35,11 +35,11 @@
 static gint readline_x, readline_y;
 char* pal_rl_default_text = NULL;
 
-char* pal_rl_no_match()
+char* pal_rl_no_match(void)
 { return NULL; }
 
 
-void pal_rl_default_text_fn()
+void pal_rl_default_text_fn(void)
 {
     gchar* locale_default_text = g_locale_from_utf8(pal_rl_default_text, -1,
 						    NULL, NULL, NULL);

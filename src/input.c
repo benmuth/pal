@@ -463,7 +463,7 @@ static gboolean get_file_to_load(gchar* file, gchar* pal_file, gboolean show_err
 	    return FALSE;
 	}
 	else
-	    sprintf(pal_file, file);
+	    sprintf(pal_file, "%s", file);
     }
 
     else
@@ -519,7 +519,7 @@ static FILE* get_file_handle(gchar* filename, gboolean show_error)
 
 
 /* loads calendar files and settings from a pal.conf file */
-GHashTable* load_files()
+GHashTable* load_files(void)
 {
     gchar s[2048];
     gchar text[2048];
@@ -611,7 +611,7 @@ GHashTable* load_files()
 	FILE* pal_file_handle = NULL;
 
 	if(!get_file_to_load(settings->pal_file, pal_file, FALSE))
-	    sprintf(pal_file, settings->pal_file);
+	    sprintf(pal_file, "%s", settings->pal_file);
 
 	pal_file_handle = get_file_handle(pal_file, TRUE);
 	if(pal_file_handle != NULL)

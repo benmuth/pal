@@ -55,7 +55,7 @@ WINDOW *pal_curwin = NULL;
  * If you wish to clear the entire screen before drawing, call
  * pal_manage_refresh_at() first.
  */
-static void pal_manage_refresh_at()
+static void pal_manage_refresh_at(void)
 {
     gchar date_text[128];
     gint linecount = 0;

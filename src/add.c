@@ -47,15 +47,15 @@ void pal_add_suffix(gint number, gchar* suffix, gint buf_size)
     }
 }
 
-/* convert numerical representation of weekdays:
-   from: 1(mon) -> 7(sun)
-   to:   1(sun) -> 7(sat) */
-static inline gint pal_add_weekday_convert(gint weekday)
-{
-  if(weekday == 7)
-    return 1;
-  return weekday+1;
-}
+// /* convert numerical representation of weekdays:
+//    from: 1(mon) -> 7(sun)
+//    to:   1(sun) -> 7(sat) */
+// static inline gint pal_add_weekday_convert(gint weekday)
+// {
+//   if(weekday == 7)
+//     return 1;
+//   return weekday+1;
+// }
 
 static gchar* pal_add_get_range( GDate *date )
 {

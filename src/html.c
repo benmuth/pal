@@ -211,7 +211,7 @@ static void pal_html_month(GDate* date, gboolean force_month_label,
 
 
 
-void pal_html_out()
+void pal_html_out(void)
 {
     gint on_month = 0;
     GDate* today = g_date_new();
