@@ -26,45 +26,18 @@ ifneq ($(DEBUG),1)
 	@strip $(NAME)
 endif
 
-
-
-
-# make dependency files
-tmp.deps/%.d: %.c
-	@echo " [deps] $(@)"
-	@mkdir -p tmp.deps
-	@set -e; $(CC) -MM $(CFLAGS) $< \
-        | sed 's/\($*\)\.o[ :]*/tmp.opt\/\1.o $* : /g' > $@; \
-        [ -s $@ ] ||  rm -f $@
-	@set -e; $(CC) -MM $(CFLAGS) $< \
-        | sed 's/\($*\)\.o[ :]*/tmp.debug\/\1.o $* : /g' >> $@; \
-        [ -s $@ ] ||  rm -f $@
-
-
-# Include dependency files here.
-# If the files don't exist, this will fail silently and remake the dep files.
--include $(addprefix tmp.deps/,$(SRC:.c=.d))
-
-
-tmp.debug/%.o: Makefile Makefile.defs
+tmp.debug/%.o: %.c Makefile Makefile.defs
 	@mkdir -p tmp.debug
 	@echo " [${CC} debug] $*.c"
-	@$(CC) $(CFLAGS) -c $*.c $(OUTPUT_OPTION)
+	@$(CC) $(CFLAGS) -c $< $(OUTPUT_OPTION)
 
-tmp.opt/%.o: Makefile Makefile.defs
+tmp.opt/%.o: %.c Makefile Makefile.defs
 	@mkdir -p tmp.opt
 	@echo " [${CC}] $*.c"
-	@$(CC) $(CFLAGS) -c $*.c $(OUTPUT_OPTION)
-
-
+	@$(CC) $(CFLAGS) -c $< $(OUTPUT_OPTION)
 
 debug: clean
 	@$(MAKE) DEBUG=1
-
-
-
-
-
 
 # Use "install-no-rm" instead of "install" if you don't want to check
 # for old files that should be removed before installing the new
@@ -202,13 +175,10 @@ compile_commands.json:
 	@echo "Generating compile_commands.json for LSP..."
 	@./generate_compile_commands.sh > compile_commands.json
 
-# Remove binay, object files and emacs backup files
+# Remove binary, object files and emacs backup files
 clean:
 	rm -rf $(NAME) libpal.a tmp.opt tmp.debug *.o *~
 
-# Remove object files and dependency files
-cleandeps: clean
-	rm -rf tmp.deps *.d
 
 cleandep: cleandeps
 distclean: cleandeps
