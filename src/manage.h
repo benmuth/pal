@@ -21,5 +21,5 @@
  *
  */
 
-void pal_manage(void);
+void pal_manage (void);
 #endif

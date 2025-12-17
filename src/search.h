@@ -21,8 +21,12 @@
  *
  */
 
-PalEvent* pal_search_event_num(gint event_number, GDate** store_date, const gchar* search_string, const GDate* date, const gint window);
-int pal_search_view(const gchar* search_string, GDate* date, const gint window, const gboolean number_events);
-gboolean pal_search_isearch_event( GDate **date, gint *selected, gchar *string, gboolean forward);
+PalEvent *pal_search_event_num (gint event_number, GDate **store_date,
+                                const gchar *search_string, const GDate *date,
+                                const gint window);
+int pal_search_view (const gchar *search_string, GDate *date,
+                     const gint window, const gboolean number_events);
+gboolean pal_search_isearch_event (GDate **date, gint *selected, gchar *string,
+                                   gboolean forward);
 
 #endif

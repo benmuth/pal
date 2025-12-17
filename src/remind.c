@@ -21,12 +21,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "edit.h"
+#include "event.h"
+#include "input.h"
 #include "main.h"
 #include "output.h"
-#include "event.h"
 #include "rl.h"
-#include "input.h"
-#include "edit.h"
 
 /* escape ' */
 // static void pal_remind_escape(gchar *string, FILE* tmp_stream)
@@ -64,7 +64,11 @@
 //     pal_output_fg(BRIGHT, GREEN, " * * *\n");
 
 //     pal_output_fg(BRIGHT, GREEN, "> ");
-//     pal_output_wrap(_("This feature allows you to select one event and have an email sent to you about the event at a date/time that you provide.  If the event is recurring, you will only receive one reminder.  You MUST have atd, crond and sendmail installed and working for this feature to work."),2,2);
+//     pal_output_wrap(_("This feature allows you to select one event and have
+//     an email sent to you about the event at a date/time that you provide. If
+//     the event is recurring, you will only receive one reminder.  You MUST
+//     have atd, crond and sendmail installed and working for this feature to
+//     work."),2,2);
 
 //     g_print("\n");
 
@@ -90,24 +94,26 @@
 
 //     }
 
-
 // #if 0
 //     pal_rl_default_text = at_string;
 //     rl_pre_input_hook = (rl_hook_func_t*) pal_rl_default_text_fn;
-//     at_string = pal_rl_get_line(_("Remind me on (HH:MM YYYY-MM-DD): "), settings->term_rows-2, 0);
-//     rl_pre_input_hook = NULL;
+//     at_string = pal_rl_get_line(_("Remind me on (HH:MM YYYY-MM-DD): "),
+//     settings->term_rows-2, 0); rl_pre_input_hook = NULL;
 // #endif
 
-//     at_string = pal_rl_get_line_default(_("Remind me on (HH:MM YYYY-MM-DD): "), settings->term_rows-2, 0, at_string);
+//     at_string = pal_rl_get_line_default(_("Remind me on (HH:MM YYYY-MM-DD):
+//     "), settings->term_rows-2, 0, at_string);
 
 // #if 0
 //     pal_rl_default_text = g_strdup(g_get_user_name());
 //     rl_pre_input_hook = (rl_hook_func_t*) pal_rl_default_text_fn;
-//     email_add = pal_rl_get_line(_("Username on local machine or email address: "), settings->term_rows-2, 0);
-//     rl_pre_input_hook = NULL;
+//     email_add = pal_rl_get_line(_("Username on local machine or email
+//     address: "), settings->term_rows-2, 0); rl_pre_input_hook = NULL;
 // #endif
-    
-//     email_add = pal_rl_get_line_default(_("Username on local machine or email address: "), settings->term_rows-2, 0, g_strdup(g_get_user_name()));
+
+//     email_add = pal_rl_get_line_default(_("Username on local machine or
+//     email address: "), settings->term_rows-2, 0,
+//     g_strdup(g_get_user_name()));
 
 //     mkstemp(tmp_name);
 //     tmp_stream = fopen(tmp_name, "w");
@@ -151,10 +157,12 @@
 //     pal_output_fg(BRIGHT, GREEN, "> ");
 //     g_print(_("Attempting to run 'at'...\n"));
 //     g_print("at -f %s %s\n", tmp_name, at_string);
-//     return_val = system(g_strconcat("at -f ", tmp_name, " ", at_string, NULL));
+//     return_val = system(g_strconcat("at -f ", tmp_name, " ", at_string,
+//     NULL));
 
 //     if(return_val != 0)
-// 	pal_output_error(_("ERROR: Date string was invalid or could not run 'at'.  Is 'atd' running?"));
+// 	pal_output_error(_("ERROR: Date string was invalid or could not run
+// 'at'.  Is 'atd' running?"));
 //     else
 //     {
 // 	pal_output_fg(BRIGHT, GREEN, ">>> ");

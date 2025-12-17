@@ -21,8 +21,6 @@
  *
  */
 
-
-
-void pal_html_out(void);
+void pal_html_out (void);
 
 #endif

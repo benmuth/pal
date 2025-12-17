@@ -18,87 +18,86 @@
  *
  */
 
-#include <stdio.h>
 #include <ncurses.h>
+#include <stdio.h>
 
+#include "edit.h"
+#include "event.h"
+#include "input.h"
 #include "main.h"
 #include "output.h"
-#include "event.h"
 #include "rl.h"
-#include "input.h"
-#include "edit.h"
 
-void pal_del_write_file(PalEvent* dead_event)
+void
+pal_del_write_file (PalEvent *dead_event)
 {
-    FILE *file = NULL;
-    gchar* filename = g_strdup(dead_event->file_name);
-    FILE *out_file = NULL;
-    gchar *out_filename = NULL;
-    PalEvent* event_head = NULL;
+  FILE *file = NULL;
+  gchar *filename = g_strdup (dead_event->file_name);
+  FILE *out_file = NULL;
+  gchar *out_filename = NULL;
+  PalEvent *event_head = NULL;
 
-    g_strstrip(filename);
-    out_filename = g_strconcat(filename, ".paltmp", NULL);
+  g_strstrip (filename);
+  out_filename = g_strconcat (filename, ".paltmp", NULL);
 
-
-    file = fopen(filename, "r");
-    if(file == NULL)
+  file = fopen (filename, "r");
+  if (file == NULL)
     {
-	pal_output_error(_("ERROR: Can't read file: %s\n"), filename);
-	pal_output_error(_("       The event was NOT deleted."));
-	return;
+      pal_output_error (_ ("ERROR: Can't read file: %s\n"), filename);
+      pal_output_error (_ ("       The event was NOT deleted."));
+      return;
     }
 
-    out_file = fopen(out_filename, "w");
-    if(out_file == NULL)
+  out_file = fopen (out_filename, "w");
+  if (out_file == NULL)
     {
-	pal_output_error(_("ERROR: Can't write file: %s\n"), out_filename);
-	pal_output_error(_("       The event was NOT deleted."));
-	if(file != NULL)
-	    fclose(file);
-	return;
+      pal_output_error (_ ("ERROR: Can't write file: %s\n"), out_filename);
+      pal_output_error (_ ("       The event was NOT deleted."));
+      if (file != NULL)
+        fclose (file);
+      return;
     }
 
+  pal_input_skip_comments (file, out_file);
+  event_head = pal_input_read_head (file, out_file, filename);
 
-
-    pal_input_skip_comments(file, out_file);
-    event_head = pal_input_read_head(file, out_file, filename);
-
-    while(1)
+  while (1)
     {
-	PalEvent* pal_event = NULL;
+      PalEvent *pal_event = NULL;
 
-	pal_input_skip_comments(file, out_file);
+      pal_input_skip_comments (file, out_file);
 
-	pal_event = pal_input_read_event(file, out_file, filename, event_head, dead_event);
+      pal_event = pal_input_read_event (file, out_file, filename, event_head,
+                                        dead_event);
 
-	/* stop trying to delete dead_event if we just deleted it */
-	if(dead_event != NULL && pal_event == dead_event)
-	    dead_event = NULL;
-	else if(pal_event == NULL && pal_input_eof(file))
-	    break;
+      /* stop trying to delete dead_event if we just deleted it */
+      if (dead_event != NULL && pal_event == dead_event)
+        dead_event = NULL;
+      else if (pal_event == NULL && pal_input_eof (file))
+        break;
     }
 
+  fclose (file);
+  fclose (out_file);
 
-    fclose(file);
-    fclose(out_file);
-
-    if(rename(out_filename, filename) != 0)
+  if (rename (out_filename, filename) != 0)
     {
-	pal_output_error(_("ERROR: Can't rename %s to %s\n"), out_filename, filename);
-	pal_output_error(_("       The event was NOT deleted."));
-	return;
+      pal_output_error (_ ("ERROR: Can't rename %s to %s\n"), out_filename,
+                        filename);
+      pal_output_error (_ ("       The event was NOT deleted."));
+      return;
     }
 
-
-    if(dead_event == NULL)
+  if (dead_event == NULL)
     {
-	pal_output_fg(BRIGHT, GREEN, ">>> ");
-	g_print(_("Event removed from %s.\n"), filename);
+      pal_output_fg (BRIGHT, GREEN, ">>> ");
+      g_print (_ ("Event removed from %s.\n"), filename);
     }
-    else
-	pal_output_error(_("ERROR: Couldn't find event to be deleted in %s"), filename);
+  else
+    pal_output_error (_ ("ERROR: Couldn't find event to be deleted in %s"),
+                      filename);
 
-    g_free(filename);
+  g_free (filename);
 }
 
 // static void pal_del_event( GDate *date, int eventnum )
@@ -112,7 +111,9 @@ void pal_del_write_file(PalEvent* dead_event)
 //     pal_output_fg(BRIGHT, GREEN, " * * *\n");
 
 //     pal_output_fg(BRIGHT, YELLOW, "> ");
-//     pal_output_wrap(_("If you want to delete old events that won't occur again, you can use pal's -x option instead of deleting the events manually."),2,2);
+//     pal_output_wrap(_("If you want to delete old events that won't occur
+//     again, you can use pal's -x option instead of deleting the events
+//     manually."),2,2);
 
 //     dead_event = pal_rl_get_event(&event_date, FALSE);
 
@@ -121,7 +122,8 @@ void pal_del_write_file(PalEvent* dead_event)
 //     g_print(_("You have selected to delete the following event:\n"));
 //     pal_output_event(dead_event, event_date, -1);
 
-//     if(pal_rl_get_y_n(_("Are you sure you want to delete this event? [y/n]: ")))
+//     if(pal_rl_get_y_n(_("Are you sure you want to delete this event? [y/n]:
+//     ")))
 //        pal_del_write_file(dead_event);
 
 //     pal_main_reload();

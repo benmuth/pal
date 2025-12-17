@@ -21,8 +21,6 @@
  *
  */
 
-
-
-void pal_latex_out(void);
+void pal_latex_out (void);
 
 #endif

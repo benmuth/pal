@@ -21,6 +21,6 @@
  *
  */
 
-void pal_remind_event(void);
+void pal_remind_event (void);
 
 #endif

@@ -22,18 +22,17 @@
  */
 
 /* returns a list of events on the givent date */
-GList* get_events(const GDate* date);
+GList *get_events (const GDate *date);
 /* Return just the count */
-gint pal_get_event_count( GDate *date );
+gint pal_get_event_count (GDate *date);
 
-
-PalEvent* pal_event_init(void);
-void pal_event_free(PalEvent* event);
-void pal_event_fill_dates(PalEvent* pal_event, const gchar* date_string);
-gboolean parse_event(PalEvent *event, const gchar* date_string);
-gchar* get_key(const GDate* date);
-GDate* get_date(const gchar* key);
-gchar* pal_event_date_string_to_key(const gchar* date_string);
-PalEvent* pal_event_copy(PalEvent* orig);
-gchar* pal_event_escape(const PalEvent* event, const GDate* today);
+PalEvent *pal_event_init (void);
+void pal_event_free (PalEvent *event);
+void pal_event_fill_dates (PalEvent *pal_event, const gchar *date_string);
+gboolean parse_event (PalEvent *event, const gchar *date_string);
+gchar *get_key (const GDate *date);
+GDate *get_date (const gchar *key);
+gchar *pal_event_date_string_to_key (const gchar *date_string);
+PalEvent *pal_event_copy (PalEvent *orig);
+gchar *pal_event_escape (const PalEvent *event, const GDate *today);
 #endif

@@ -25,20 +25,21 @@
 
 // extern char* pal_rl_default_text;
 
-char* pal_rl_no_match(void);
+char *pal_rl_no_match (void);
 
 /* can't return blank line */
-gchar* pal_rl_get_line(const char* prompt, const int row, const int col); 
-gchar* pal_rl_get_line_default(const char* prompt, const int row, const int col, const char* default_text);
+gchar *pal_rl_get_line (const char *prompt, const int row, const int col);
+gchar *pal_rl_get_line_default (const char *prompt, const int row,
+                                const int col, const char *default_text);
 
 /* can return blank line */
-gchar* pal_rl_get_raw_line(const char* prompt, const int row, const int col); 
+gchar *pal_rl_get_raw_line (const char *prompt, const int row, const int col);
 
-gboolean pal_rl_get_y_n(const char* prompt);
-
+gboolean pal_rl_get_y_n (const char *prompt);
 
 // void pal_rl_default_text_fn(void);
-void pal_rl_completions_output(char **matches, int num_matches, int max_length );
-PalEvent* pal_rl_get_event(GDate** d, gboolean allow_global);
-void pal_rl_ncurses_hack(void);
+void pal_rl_completions_output (char **matches, int num_matches,
+                                int max_length);
+PalEvent *pal_rl_get_event (GDate **d, gboolean allow_global);
+void pal_rl_ncurses_hack (void);
 #endif
