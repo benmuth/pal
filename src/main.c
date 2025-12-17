@@ -735,7 +735,7 @@ int main(gint argc, gchar** argv)
     settings->term_cols           = 80;
     settings->term_rows           = 24;
     settings->compact_date_fmt    = g_strdup("%m/%d/%Y");
-    settings->conf_file = g_strconcat(g_get_home_dir(), "/.pal/pal.conf", NULL);
+    settings->conf_file = g_strconcat(g_get_home_dir(), "/.config/pal/pal.conf", NULL);
     settings->show_weeknum        = FALSE;
 
     g_set_print_handler( pal_output_handler );

@@ -77,16 +77,15 @@ install-no-rm: install-mo install-man install-doc install-bin install-share
 install-bin:
 	@echo " --- Installing binary --- "
 	@mkdir -p ${DESTDIR}${prefix}/bin;
-	install -m 0755 -o root pal ${DESTDIR}${prefix}/bin;
-	install -m 0755 -o root convert/vcard2pal ${DESTDIR}${prefix}/bin;
+	install -m 0755 pal ${DESTDIR}${prefix}/bin;
+	install -m 0755 convert/vcard2pal ${DESTDIR}${prefix}/bin;
 	@echo
 
 install-share:
 	@echo " --- Installing global data --- "
 	@mkdir -p ${DESTDIR}${prefix}/share/pal;
-	install -m 0644 -o root ../share/*.pal ${DESTDIR}${prefix}/share/pal
-	@mkdir -p ${DESTDIR}/etc;
-	install -m 0644 -o root ../pal.conf ${DESTDIR}/etc/
+	install -m 0644 ../share/*.pal ${DESTDIR}${prefix}/share/pal
+	install -m 0644 ../pal.conf ${DESTDIR}${prefix}/share/pal/
 	@echo
 
 # "install" will install the files needed by pal and also check to see
@@ -94,15 +93,7 @@ install-share:
 # want the install process to attempt to remove old files, use
 # "install-no-rm".
 install: install-no-rm
-	@echo " --- Checking for files to remove --- "
-	@echo " NOTE: You might be prompted to remove some files that appear"
-	@echo " to be from an old pal installation.  Unless you know that"
-	@echo " that you need these files, you should probably delete them"
-	@echo " by always answering 'y'."
-	@# prompt about removing old doc directories
-	@find ${prefix}/share/doc -name pal-[0-9].[0-9].[0-9]\* -a \! -name pal-$(PAL_VERSION) -a -type d -maxdepth 1 -exec rm -ri {} \;;
-	@# Remove pal.conf from its old location
-	@rm -f ${prefix}/share/pal/pal.conf;
+	@echo " --- Installation complete --- "
 	@echo
 
 # Install man page
@@ -110,8 +101,8 @@ install-man:
 	@echo " --- Installing man page --- "
 	cd ../; sed 's/PAL_VERSION/$(PAL_VERSION)/' pal.1.template | gzip -9 > pal.1.gz
 	@mkdir -p ${DESTDIR}${prefix}/share/man/man1/
-	install -m 0644 -o root ../pal.1.gz ${DESTDIR}${prefix}/share/man/man1/
-	install -m 0644 -o root convert/vcard2pal.1 ${DESTDIR}${prefix}/share/man/man1/
+	install -m 0644 ../pal.1.gz ${DESTDIR}${prefix}/share/man/man1/
+	install -m 0644 convert/vcard2pal.1 ${DESTDIR}${prefix}/share/man/man1/
 	rm ../pal.1.gz
 	@echo
 
@@ -120,15 +111,15 @@ install-doc:
 	@echo " --- Installing docs --- "
 	@mkdir -p ${DESTDIR}${prefix}/share/doc/pal-$(PAL_VERSION);
 	cat ../COPYING | gzip -9 > ../COPYING.gz
-	install -m 0644 -o root ../COPYING.gz ${DESTDIR}${prefix}/share/doc/pal-$(PAL_VERSION);
+	install -m 0644 ../COPYING.gz ${DESTDIR}${prefix}/share/doc/pal-$(PAL_VERSION);
 	rm ../COPYING.gz
 	cat ../INSTALL | gzip -9 > ../INSTALL.gz
-	install -m 0644 -o root ../INSTALL.gz ${DESTDIR}${prefix}/share/doc/pal-$(PAL_VERSION);
+	install -m 0644 ../INSTALL.gz ${DESTDIR}${prefix}/share/doc/pal-$(PAL_VERSION);
 	rm ../INSTALL.gz
 	cat ../ChangeLog | gzip -9 > ../ChangeLog.gz
-	install -m 0644 -o root ../ChangeLog.gz ${DESTDIR}${prefix}/share/doc/pal-$(PAL_VERSION);
+	install -m 0644 ../ChangeLog.gz ${DESTDIR}${prefix}/share/doc/pal-$(PAL_VERSION);
 	rm ../ChangeLog.gz
-	install -m 0644 -o root ../doc/example.css ${DESTDIR}${prefix}/share/doc/pal-$(PAL_VERSION);
+	install -m 0644 ../doc/example.css ${DESTDIR}${prefix}/share/doc/pal-$(PAL_VERSION);
 	@echo
 
 
@@ -138,27 +129,27 @@ install-mo:
 	@# GERMAN
 	mkdir -p ${DESTDIR}${prefix}/share/locale/de/LC_MESSAGES/
 	cd ../po; msgfmt de.po -o de.mo
-	install -m 0644 -o root ../po/de.mo ${DESTDIR}${prefix}/share/locale/de/LC_MESSAGES/pal.mo
+	install -m 0644 ../po/de.mo ${DESTDIR}${prefix}/share/locale/de/LC_MESSAGES/pal.mo
 	rm ../po/de.mo
 	@# SWEDISH
 	mkdir -p ${DESTDIR}${prefix}/share/locale/sv/LC_MESSAGES/
 	cd ../po; msgfmt sv.po -o sv.mo
-	install -m 0644 -o root ../po/sv.mo ${DESTDIR}${prefix}/share/locale/sv/LC_MESSAGES/pal.mo
+	install -m 0644 ../po/sv.mo ${DESTDIR}${prefix}/share/locale/sv/LC_MESSAGES/pal.mo
 	rm ../po/sv.mo
 	@# SPANISH
 	mkdir -p ${DESTDIR}${prefix}/share/locale/es/LC_MESSAGES/
 	cd ../po; msgfmt es.po -o es.mo
-	install -m 0644 -o root ../po/es.mo ${DESTDIR}${prefix}/share/locale/es/LC_MESSAGES/pal.mo
+	install -m 0644 ../po/es.mo ${DESTDIR}${prefix}/share/locale/es/LC_MESSAGES/pal.mo
 	rm ../po/es.mo
 	@# POLISH
 	mkdir -p ${DESTDIR}${prefix}/share/locale/pl/LC_MESSAGES/
 	cd ../po; msgfmt pl.po -o pl.mo
-	install -m 0644 -o root ../po/pl.mo ${DESTDIR}${prefix}/share/locale/pl/LC_MESSAGES/pal.mo
+	install -m 0644 ../po/pl.mo ${DESTDIR}${prefix}/share/locale/pl/LC_MESSAGES/pal.mo
 	rm ../po/pl.mo
 	@# TURKISH
 	mkdir -p ${DESTDIR}${prefix}/share/locale/tr/LC_MESSAGES/
 	cd ../po; msgfmt tr.po -o tr.mo
-	install -m 0644 -o root ../po/tr.mo ${DESTDIR}${prefix}/share/locale/tr/LC_MESSAGES/pal.mo
+	install -m 0644 ../po/tr.mo ${DESTDIR}${prefix}/share/locale/tr/LC_MESSAGES/pal.mo
 	rm ../po/tr.mo
 	@echo
 

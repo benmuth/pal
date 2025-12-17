@@ -550,11 +550,11 @@ GHashTable* load_files()
 	    gchar* out_path;
 	    gint c;
 
-	    out_dirname = g_strconcat(g_get_home_dir(), "/.pal", NULL);
+	    out_dirname = g_strconcat(g_get_home_dir(), "/.config/pal", NULL);
 	    out_path    = g_strconcat(out_dirname, "/pal.conf", NULL);
 
 	    pal_output_error(_("NOTE: Creating %s\n"), out_path);
-	    pal_output_error(_("NOTE: Edit ~/.pal/pal.conf to change how and if certain events are displayed.\n"),
+	    pal_output_error(_("NOTE: Edit ~/.config/pal/pal.conf to change how and if certain events are displayed.\n"),
 			     out_path);
 
 	    /* create directory if it doesn't exist */
@@ -567,18 +567,11 @@ GHashTable* load_files()
 		}
 	    }
 
-	    /* attempt to copy /etc/pal.conf to ~/.pal/pal.conf */
-	    file = fopen("/etc/pal.conf", "r");
-
-	    /* if not found, try PREFIX/share/pal/pal.conf instead */
-	    /* NOTE: This is will be removed in the future */
-	    if(file == NULL)
-		file = fopen(PREFIX "/share/pal/pal.conf", "r");
-
+	    /* attempt to copy PREFIX/share/pal/pal.conf to ~/.config/pal/pal.conf */
+	    file = fopen(PREFIX "/share/pal/pal.conf", "r");
 
 	    if(file == NULL)
 	    {
-		pal_output_error(_("ERROR: Can't open file: /etc/pal.conf\n"));
 		pal_output_error(_("ERROR: Can't open file: " PREFIX "/share/pal/pal.conf\n"));
 		pal_output_error(_("ERROR: This indicates an improper installation.\n"));
 		return ht;
