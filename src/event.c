@@ -602,6 +602,8 @@ parse_event (PalEvent *event, const gchar *date_string)
   int count = 1;
   int i;
 
+  if (date_string[0] == '\0') return FALSE;
+
   s = g_strsplit (date_string, ":", 3);
 
   do
