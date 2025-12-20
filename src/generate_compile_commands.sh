@@ -13,24 +13,45 @@ SOURCES=(
     add.c edit.c del.c remind.c search.c manage.c
 )
 
+# Test files (relative to tests/ subdirectory)
+TEST_SOURCES=(
+    test.c
+)
+
 # Generate JSON
 echo '['
+
+# Main source files
 for i in "${!SOURCES[@]}"; do
     src="${SOURCES[$i]}"
-    
-    # Add comma except for last entry
-    if [ $i -eq $((${#SOURCES[@]} - 1)) ]; then
-        comma=""
-    else
-        comma=","
-    fi
-    
+
     cat << JSON
   {
     "directory": "${SRCDIR}",
     "command": "gcc ${CFLAGS} -c ${src} -o tmp.opt/${src%.c}.o",
     "file": "${SRCDIR}/${src}"
+  },
+JSON
+done
+
+# Test files
+for i in "${!TEST_SOURCES[@]}"; do
+    src="${TEST_SOURCES[$i]}"
+
+    # Add comma except for last entry
+    if [ $i -eq $((${#TEST_SOURCES[@]} - 1)) ]; then
+        comma=""
+    else
+        comma=","
+    fi
+
+    cat << JSON
+  {
+    "directory": "${SRCDIR}/tests",
+    "command": "gcc ${CFLAGS} -I${SRCDIR} -c ${src} -o ${src%.c}.o",
+    "file": "${SRCDIR}/tests/${src}"
   }${comma}
 JSON
 done
+
 echo ']'

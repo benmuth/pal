@@ -68,5 +68,10 @@
     "directory": "/home/ben/code/pal/src",
     "command": "gcc -O2 -Wall -I/home/ben/.local/include -I/usr/include/glib-2.0 -I/usr/lib/glib-2.0/include -I/usr/include/sysprof-6 -pthread -DPAL_VERSION=\"0.4.2\" -DPREFIX=\"/home/ben/.local\" -c manage.c -o tmp.opt/manage.o",
     "file": "/home/ben/code/pal/src/manage.c"
+  },
+  {
+    "directory": "/home/ben/code/pal/src/tests",
+    "command": "gcc -O2 -Wall -I/home/ben/.local/include -I/usr/include/glib-2.0 -I/usr/lib/glib-2.0/include -I/usr/include/sysprof-6 -pthread -DPAL_VERSION=\"0.4.2\" -DPREFIX=\"/home/ben/.local\" -I/home/ben/code/pal/src -c test.c -o test.o",
+    "file": "/home/ben/code/pal/src/tests/test.c"
   }
 ]
