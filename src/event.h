@@ -21,6 +21,8 @@
  *
  */
 
+#include "main.h"
+
 /* returns a list of events on the givent date */
 GList *get_events (const GDate *date);
 /* Return just the count */
