@@ -6,7 +6,7 @@ INCLDIR = -I${prefix}/include `pkg-config --cflags glib-2.0`
 LIBDIR  =
 LIBS    = `pkg-config --libs glib-2.0` -lreadline -lncurses
 
-SRC     = main.c colorize.c output.c input.c event.c rl.c html.c latex.c \
+SRC     = main.c colorize.c output.c input.c event.c rl.c html.c \
           add.c edit.c del.c remind.c search.c manage.c
 OBJ     = $(SRC:.c=.o)
 

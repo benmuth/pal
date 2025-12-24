@@ -9,8 +9,7 @@ CFLAGS="-O2 -Wall -I${PREFIX}/include $(pkg-config --cflags glib-2.0) -DPAL_VERS
 
 # Source files from Makefile
 SOURCES=(
-    main.c colorize.c output.c input.c event.c rl.c html.c latex.c
-    add.c edit.c del.c remind.c search.c manage.c
+    main.c colorize.c output.c input.c event.c rl.c html.c add.c edit.c del.c remind.c search.c manage.c
 )
 
 # Test files (relative to tests/ subdirectory)

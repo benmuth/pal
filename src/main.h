@@ -59,7 +59,6 @@ typedef struct _Settings
   gboolean curses;         /* use curses output functions instead of glib */
   gint event_color;        /* default event color */
   gboolean html_out;       /* html output */
-  gboolean latex_out;      /* LaTeX output */
   gboolean compact_list;   /* show a compact list */
   gboolean show_weeknum;   /* Show weeknum in output */
   gchar *compact_date_fmt; /* comapct list date format */

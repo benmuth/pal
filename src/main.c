@@ -34,7 +34,6 @@
 #include "output.h"
 
 #include "html.h"
-#include "latex.h"
 #include "rl.h"
 #include "search.h"
 
@@ -505,9 +504,6 @@ parse_arg (gchar **args, gint on_arg, gint total_args)
       pal_output_wrap (_ (" --html       Generate HTML calendar.  Set size of "
                           "calendar with -c."),
                        0, 16);
-      pal_output_wrap (_ (" --latex      Generate LaTeX calendar.  Set size "
-                          "of calendar with -c."),
-                       0, 16);
       pal_output_wrap (_ (" -v           Verbose output."), 0, 16);
       pal_output_wrap (_ (" --version    Display version information."), 0,
                        16);
@@ -636,12 +632,6 @@ parse_arg (gchar **args, gint on_arg, gint total_args)
   if (strcmp (*args, "--html") == 0)
     {
       settings->html_out = TRUE;
-      return on_arg;
-    }
-
-  if (strcmp (*args, "--latex") == 0)
-    {
-      settings->latex_out = TRUE;
       return on_arg;
     }
 
@@ -827,7 +817,6 @@ main (gint argc, gchar **argv)
   settings->event_color = BLUE;
   settings->pal_file = NULL;
   settings->html_out = FALSE;
-  settings->latex_out = FALSE;
   settings->compact_list = FALSE;
   settings->term_cols = 80;
   settings->term_rows = 24;
@@ -884,7 +873,11 @@ main (gint argc, gchar **argv)
   if (settings->manage_events)
     pal_manage ();
 
-  if (!settings->html_out && !settings->latex_out)
+  if (settings->html_out)
+    {
+      pal_html_out ();
+    }
+  else
     {
 
       if (!settings->cal_on_bottom)
@@ -911,16 +904,7 @@ main (gint argc, gchar **argv)
           pal_output_cal (settings->cal_lines, today);
         }
 
-    } /* end if not html_out and not latex_out */
-  else if (settings->html_out && settings->latex_out)
-    {
-      pal_output_error ("ERROR: Can't use both --html and --latex.\n");
-      return 1;
     }
-  else if (settings->html_out)
-    pal_html_out ();
-  else if (settings->latex_out)
-    pal_latex_out ();
 
   g_date_free (today);
 

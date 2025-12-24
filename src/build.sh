@@ -25,7 +25,7 @@ GLIB_CFLAGS=$(pkg-config --cflags glib-2.0)
 GLIB_LIBS=$(pkg-config --libs glib-2.0)
 
 # Source files
-SOURCES="main.c colorize.c output.c input.c event.c rl.c html.c latex.c add.c edit.c del.c remind.c search.c manage.c"
+SOURCES="main.c colorize.c output.c input.c event.c rl.c html.c add.c edit.c del.c remind.c search.c manage.c"
 
 # Compile and link in one step
 echo "Compiling..."
