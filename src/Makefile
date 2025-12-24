@@ -44,7 +44,7 @@ debug: clean
 # version.  This is useful for automated package managers that
 # automatically remove files when a program is uninstalled (ie
 # portage, rpm).
-install-no-rm: install-mo install-man install-doc install-bin install-share
+install-no-rm: install-man install-doc install-bin install-share
 
 # Install binary file
 install-bin:
@@ -95,39 +95,8 @@ install-doc:
 	install -m 0644 ../doc/example.css ${DESTDIR}${prefix}/share/doc/pal-$(PAL_VERSION);
 	@echo
 
-
-# install locale information
-install-mo:
-	@echo " --- Installing locale information --- "
-	@# GERMAN
-	mkdir -p ${DESTDIR}${prefix}/share/locale/de/LC_MESSAGES/
-	cd ../po; msgfmt de.po -o de.mo
-	install -m 0644 ../po/de.mo ${DESTDIR}${prefix}/share/locale/de/LC_MESSAGES/pal.mo
-	rm ../po/de.mo
-	@# SWEDISH
-	mkdir -p ${DESTDIR}${prefix}/share/locale/sv/LC_MESSAGES/
-	cd ../po; msgfmt sv.po -o sv.mo
-	install -m 0644 ../po/sv.mo ${DESTDIR}${prefix}/share/locale/sv/LC_MESSAGES/pal.mo
-	rm ../po/sv.mo
-	@# SPANISH
-	mkdir -p ${DESTDIR}${prefix}/share/locale/es/LC_MESSAGES/
-	cd ../po; msgfmt es.po -o es.mo
-	install -m 0644 ../po/es.mo ${DESTDIR}${prefix}/share/locale/es/LC_MESSAGES/pal.mo
-	rm ../po/es.mo
-	@# POLISH
-	mkdir -p ${DESTDIR}${prefix}/share/locale/pl/LC_MESSAGES/
-	cd ../po; msgfmt pl.po -o pl.mo
-	install -m 0644 ../po/pl.mo ${DESTDIR}${prefix}/share/locale/pl/LC_MESSAGES/pal.mo
-	rm ../po/pl.mo
-	@# TURKISH
-	mkdir -p ${DESTDIR}${prefix}/share/locale/tr/LC_MESSAGES/
-	cd ../po; msgfmt tr.po -o tr.mo
-	install -m 0644 ../po/tr.mo ${DESTDIR}${prefix}/share/locale/tr/LC_MESSAGES/pal.mo
-	rm ../po/tr.mo
-	@echo
-
 # try to uninstall pal
-uninstall: uninstall-mo uninstall-man
+uninstall: uninstall-man
 	@echo " --- Removing binary --- "
 	rm -f ${prefix}/bin/pal;
 	@echo
@@ -145,30 +114,11 @@ uninstall: uninstall-mo uninstall-man
 	@echo " safely delete the directories listed below:"
 	@find ${prefix}/share/doc -name pal-[0-9].[0-9].[0-9]\* -type d -maxdepth 1;
 
-# uninstall locale information
-uninstall-mo:
-	@echo " --- Removing locale info --- "
-	cd ${prefix}/share/locale/; find -name pal.mo -exec rm {} \;;
-	@echo
-
 # uninstall man page
 uninstall-man:
 	@echo " --- Removing man page --- "
 	rm -f ${prefix}/share/man/man1/pal.1.gz
 	@echo
-
-
-# Generates a new pot file from the .c files
-pot: $(SRC)
-	@echo Generating new pot file from .c files.
-	@xgettext -k_ --copyright-holder="Scott Kuhl" $(SRC) -o ../po/pal.pot
-	@sed 's/\(#.*\)\YEAR/\12005/' ../po/pal.pot | \
-	 sed 's/\(#.*\)\SOME DESCRIPTIVE TITLE\./\1pal calendar/' | \
-	 sed 's/\(#.*\)\FIRST AUTHOR <EMAIL@ADDRESS>/\1Scott Kuhl/' | \
-	 sed 's/\("Project-Id-Version: \)PACKAGE VERSION\(\\n"\)/\1pal $(PAL_VERSION)\2/' | \
-	 sed 's/\(#.*\)\PACKAGE/\1pal/' > ../po/pal.pot.tmp
-	@mv ../po/pal.pot.tmp ../po/pal.pot
-
 
 # Generate compile_commands.json for LSP (clangd)
 compile_commands.json:
@@ -189,7 +139,7 @@ splint:
 
 # this rule creates a tgz with all of the needed source files for
 # distribution
-dist:	pot
+dist:
 	@echo
 	rm -rf ../pal-$(PAL_VERSION)
 	mkdir ../pal-$(PAL_VERSION)
@@ -197,7 +147,6 @@ dist:	pot
 	mkdir ../pal-$(PAL_VERSION)/src/convert
 	mkdir ../pal-$(PAL_VERSION)/share
 	mkdir ../pal-$(PAL_VERSION)/doc
-	mkdir ../pal-$(PAL_VERSION)/po
 	cd ../; \
 	cp Makefile ChangeLog INSTALL COPYING pal.spec.template pal.1.template pal.conf pal-$(PAL_VERSION); \
 	sed 's/Version:.*/Version: $(PAL_VERSION)/' pal.spec.template > pal-$(PAL_VERSION)/pal-$(PAL_VERSION).spec; \
@@ -205,7 +154,6 @@ dist:	pot
 	cp src/convert/*.[ch] src/convert/vcard2pal{,.1} src/convert/Makefile pal-$(PAL_VERSION)/src/convert; \
 	cp doc/example.css pal-$(PAL_VERSION)/doc; \
 	cp share/*.pal pal-$(PAL_VERSION)/share; \
-	cp po/*.po po/pal.pot po/README pal-$(PAL_VERSION)/po;
 	@echo
 	@echo " --- CREATING tgz file with the files listed below ---"
 	cd ../; tar -czvf pal-$(PAL_VERSION).tgz pal-$(PAL_VERSION)
