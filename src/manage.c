@@ -455,7 +455,7 @@ pal_manage (void)
           return;
 
         case KEY_LEFT:
-          g_date_add_days (selected_day, -1);
+          g_date_subtract_days (selected_day, 1);
           pal_manage_refresh ();
           break;
         case KEY_RIGHT:
@@ -465,7 +465,7 @@ pal_manage (void)
           break;
         case KEY_UP:
           if (selected_event == -1)
-            g_date_add_days (selected_day, -7);
+            g_date_subtract_days (selected_day, 7);
           else
             pal_manage_scan_for_event (&selected_day, &selected_event, -1);
           pal_manage_refresh ();
