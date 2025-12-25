@@ -1,47 +1,60 @@
-#!/bin/bash
-set -e  # Exit on error
+#!/bin/sh
+# Build script for pal
+#
+# Usage:
+#   ./build.sh          # Traditional build (optimized)
+#   ./build.sh --unity  # Unity build (optimized)
+#   ./build.sh --debug  # Debug mode
+
+set -e
 
 # Parse arguments
+UNITY=0
 DEBUG=0
-if [[ "$1" == "--debug" ]]; then
-    DEBUG=1
-fi
+
+for arg in "$@"; do
+    case "$arg" in
+        --unity) UNITY=1 ;;
+        --debug) DEBUG=1 ;;
+        *) echo "Usage: $0 [--unity] [--debug]"; exit 1 ;;
+    esac
+done
 
 # Configuration
-PREFIX="$HOME/.local"
+PREFIX="${PREFIX:-$HOME/.local}"
 VERSION="0.4.2"
+CC="${CC:-gcc}"
 
 # Compiler flags
-if [[ $DEBUG -eq 1 ]]; then
-    CFLAGS="-g -fsanitize=address,leak,undefined -Wall -pedantic -Wstrict-prototypes -DG_DISABLE_DEPRECATED -DDEBUG"
-    echo "Building in DEBUG mode..."
+if [ "$DEBUG" = "1" ]; then
+    CFLAGS="-g -Wall -pedantic -Wstrict-prototypes -DG_DISABLE_DEPRECATED -DDEBUG"
 else
-    CFLAGS="-O3 -Wall"
-    echo "Building in OPTIMIZED mode..."
+    CFLAGS="-O2 -Wall"
 fi
 
-# Get dependency flags
-GLIB_CFLAGS=$(pkg-config --cflags glib-2.0)
-GLIB_LIBS=$(pkg-config --libs glib-2.0)
-
 # Source files
-SOURCES="main.c colorize.c output.c input.c event.c rl.c html.c add.c edit.c del.c remind.c search.c manage.c"
+if [ "$UNITY" = "1" ]; then
+    SOURCES="pal_unity.c"
+    echo "=== Unity Build ==="
+else
+    SOURCES="main.c colorize.c output.c input.c event.c rl.c html.c add.c edit.c del.c remind.c search.c manage.c"
+    echo "=== Traditional Build ==="
+fi
 
-# Compile and link in one step
+# Compile
 echo "Compiling..."
-clang $CFLAGS \
+$CC $CFLAGS \
     -I${PREFIX}/include \
-    $GLIB_CFLAGS \
+    $(pkg-config --cflags glib-2.0) \
     -DPAL_VERSION=\"$VERSION\" \
     -DPREFIX=\"$PREFIX\" \
     $SOURCES \
-    $GLIB_LIBS \
+    $(pkg-config --libs glib-2.0) \
     -lreadline -lncurses \
     -o pal
 
 # Strip if optimized
-if [[ $DEBUG -eq 0 ]]; then
-    echo "Stripping..."
+if [ "$DEBUG" = "0" ]; then
     strip pal
 fi
 

@@ -6,8 +6,12 @@ INCLDIR = -I${prefix}/include `pkg-config --cflags glib-2.0`
 LIBDIR  =
 LIBS    = `pkg-config --libs glib-2.0` -lreadline -lncurses
 
-SRC     = main.c colorize.c output.c input.c event.c rl.c html.c \
-          add.c edit.c del.c remind.c search.c manage.c
+ifeq ($(UNITY),1)
+      SRC = pal_unity.c
+else
+      SRC = main.c colorize.c output.c input.c event.c rl.c html.c \
+            add.c edit.c del.c remind.c search.c manage.c
+endif
 OBJ     = $(SRC:.c=.o)
 
 ifeq ($(DEBUG),1)
