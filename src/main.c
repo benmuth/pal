@@ -41,6 +41,7 @@
 
 Settings *settings;
 GHashTable *ht; /* ht holds the loaded events */
+FILE *debug_fp = NULL; /* debug log file pointer */
 
 /* prints the events on the dates from the starting_date to
  * starting_date+window */
@@ -871,7 +872,22 @@ main (gint argc, gchar **argv)
     }
 
   if (settings->manage_events)
-    pal_manage ();
+    {
+      /* Open debug log file before ncurses initialization */
+      debug_fp = fopen("/tmp/pal_debug.log", "w");
+      if (debug_fp)
+        {
+          setbuf(debug_fp, NULL);  /* Unbuffered for immediate output */
+        }
+
+      pal_manage ();
+
+      if (debug_fp)
+        {
+          fclose(debug_fp);
+          debug_fp = NULL;
+        }
+    }
 
   if (settings->html_out)
     {
@@ -903,7 +919,6 @@ main (gint argc, gchar **argv)
 
           pal_output_cal (settings->cal_lines, today);
         }
-
     }
 
   g_date_free (today);

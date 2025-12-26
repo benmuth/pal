@@ -125,4 +125,14 @@ typedef struct _PalEvent
 extern Settings *settings;
 extern GHashTable *ht; /* ht holds the loaded events */
 
+/* Debug logging support */
+extern FILE *debug_fp;
+
+#define DEBUG_LOG(...) do { \
+    if (debug_fp) { \
+        fprintf(debug_fp, __VA_ARGS__); \
+        fflush(debug_fp); \
+    } \
+} while(0)
+
 #endif
