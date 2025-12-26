@@ -266,36 +266,19 @@ static gchar *
 pal_add_get_desc (void)
 {
   char *desc = NULL;
-  char *olddesc = NULL;
   int y, x;
   pal_output_fg (BRIGHT, GREEN, "> ");
   g_print (_ ("What is the description of the event?\n"));
 
   getyx (stdscr, y, x);
 
-  do
-    {
-      move (y, x);
-      clrtobot ();
+  move (y, x);
+  clrtobot ();
 
-      olddesc = desc;
+  desc = pal_rl_get_line (_ ("Description: "), y, x);
+  rl_pre_input_hook = NULL;
 
-#if 0	
-	if(desc != NULL)
-	{
-	    pal_rl_default_text = desc;
-	    rl_pre_input_hook = (rl_hook_func_t*) pal_rl_default_text_fn;
-	}
-
-	desc = pal_rl_get_line(_("Description: "), y, x);
-	rl_pre_input_hook = NULL;
-#endif
-      desc = pal_rl_get_line_default (_ ("Description: "), y, x, olddesc);
-      g_free (olddesc);
-
-      g_print ("\n");
-    }
-  while (!pal_rl_get_y_n (_ ("Is this description correct? [y/n]: ")));
+  g_print ("\n");
 
   return desc;
 }
