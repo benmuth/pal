@@ -362,7 +362,7 @@ pal_manage_scan_for_event (GDate **date, int *eventnum, int dir)
 
       while (count < 60) /* No more than two months */
         {
-          g_date_add_days (*date, -1);
+          g_date_subtract_days (*date, 1);
           thisdaycount = pal_get_event_count (*date);
 
           if (thisdaycount > 0)
