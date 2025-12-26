@@ -49,7 +49,7 @@ pal_search_get_results (const gchar *search, const GDate *date,
 
   memcpy (searchdate, date, sizeof (GDate));
 
-  if (settings->reverse_order)
+  if (settings->reverse_order && window > 0)
     g_date_add_days (searchdate, window - 1);
 
   regcomp (&preg, search, REG_ICASE | REG_NOSUB);
@@ -103,7 +103,7 @@ pal_search_view (const gchar *search_string, GDate *date, const gint window,
   gchar end_date[128];
 
   g_date_strftime (start_date, 128, settings->date_fmt, date);
-  g_date_add_days (date, window - 1);
+  g_date_add_days (date, (window > 0) ? window - 1 : window);
   g_date_strftime (end_date, 128, settings->date_fmt, date);
   g_date_subtract_days (date, window - 1);
 

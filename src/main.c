@@ -49,7 +49,7 @@ view_range (GDate *starting_date, gint window)
 {
   gint i;
 
-  if (settings->reverse_order)
+  if (settings->reverse_order && window > 0)
     g_date_add_days (starting_date, window - 1);
 
   for (i = 0; i < window; i++)
