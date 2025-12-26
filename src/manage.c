@@ -18,6 +18,7 @@
  *
  */
 
+#include "glib.h"
 #include "main.h"
 
 #include <ncurses.h>
