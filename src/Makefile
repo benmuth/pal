@@ -12,14 +12,7 @@ else
       SRC = main.c colorize.c output.c input.c event.c rl.c html.c \
             add.c edit.c del.c remind.c search.c manage.c
 endif
-OBJ     = $(SRC:.c=.o)
-
-ifeq ($(DEBUG),1)
-      TMPDIR = tmp.debug
-else
-      TMPDIR = tmp.opt
-endif
-OBJ   = $(addprefix $(TMPDIR)/,$(SRC:.c=.o))
+OBJ = $(SRC:.c=.o)
 
 
 $(NAME): $(OBJ)
@@ -30,13 +23,7 @@ ifneq ($(DEBUG),1)
 	@strip $(NAME)
 endif
 
-tmp.debug/%.o: %.c Makefile Makefile.defs
-	@mkdir -p tmp.debug
-	@echo " [${CC} debug] $*.c"
-	@$(CC) $(CFLAGS) -c $< $(OUTPUT_OPTION)
-
-tmp.opt/%.o: %.c Makefile Makefile.defs
-	@mkdir -p tmp.opt
+%.o: %.c Makefile Makefile.defs
 	@echo " [${CC}] $*.c"
 	@$(CC) $(CFLAGS) -c $< $(OUTPUT_OPTION)
 
@@ -131,7 +118,7 @@ compile_commands.json:
 
 # Remove binary, object files and emacs backup files
 clean:
-	rm -rf $(NAME) libpal.a tmp.opt tmp.debug *.o *~
+	rm -rf $(NAME) libpal.a *.o *~
 
 
 cleandep: cleandeps
