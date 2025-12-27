@@ -557,11 +557,11 @@ load_files (void)
           gchar *out_path;
           gint c;
 
-          out_dirname = g_strconcat (g_get_home_dir (), "/.config/pal", NULL);
+          out_dirname = g_strconcat (g_get_home_dir (), "/.pal", NULL);
           out_path = g_strconcat (out_dirname, "/pal.conf", NULL);
 
           pal_output_error (_ ("NOTE: Creating %s\n"), out_path);
-          pal_output_error (_ ("NOTE: Edit ~/.config/pal/pal.conf to change "
+          pal_output_error (_ ("NOTE: Edit ~/.pal/pal.conf to change "
                                "how and if certain events are displayed.\n"),
                             out_path);
 
@@ -577,7 +577,7 @@ load_files (void)
             }
 
           /* attempt to copy PREFIX/share/pal/pal.conf to
-           * ~/.config/pal/pal.conf */
+           * ~/.pal/pal.conf */
           file = fopen (PREFIX "/share/pal/pal.conf", "r");
 
           if (file == NULL)
