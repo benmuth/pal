@@ -83,6 +83,9 @@ pal_manage_refresh_at (void)
   /* Note: Because the output of g_print is redirected through
    * ncurses, we don't have to worry about unexpected scrolling */
 
+  gint days_without_events = 0;
+  gboolean passed_selected_day = FALSE;
+
   while (!finished_printing)
     {
       gint thisdaycount = 0;
@@ -95,6 +98,7 @@ pal_manage_refresh_at (void)
       if (isselectedday)
         {
           events_on_day = thisdaycount;
+          passed_selected_day = TRUE;
 
           if (selected_event >= events_on_day)
             selected_event = events_on_day - 1;
@@ -115,9 +119,22 @@ pal_manage_refresh_at (void)
               clrtobot ();
               finished_printing = TRUE; /* break out of loop */
             }
+
+          /* Reset counter when we find events */
+          if (thisdaycount > 0)
+            days_without_events = 0;
+        }
+      else
+        {
+          /* No events on this day */
+          days_without_events++;
         }
 
       g_date_add_days (date, 1);
+
+      /* If we've passed the selected day and gone 60 days without events, stop */
+      if (passed_selected_day && days_without_events >= 60)
+        finished_printing = TRUE;
     }
   g_date_free (date);
 
