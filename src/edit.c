@@ -59,7 +59,7 @@ pal_edit_get_field_val (int i, PalEvent *event, GDate *d)
       return buf;
     case 3:
       if (event->start_date == NULL)
-        return g_strdup (_ ("None"));
+        return g_strdup ("None");
 
       buf = g_malloc (sizeof (gchar) * 128);
       g_date_strftime (buf, 128, settings->date_fmt, event->start_date);
@@ -67,14 +67,14 @@ pal_edit_get_field_val (int i, PalEvent *event, GDate *d)
 
     case 4:
       if (event->end_date == NULL)
-        return g_strdup (_ ("None"));
+        return g_strdup ("None");
 
       buf = g_malloc (sizeof (gchar) * 128);
       g_date_strftime (buf, 128, settings->date_fmt, event->end_date);
       return buf;
     case 5:
       if (event->start_time == NULL)
-        return g_strdup (_ ("None"));
+        return g_strdup ("None");
 
       buf = g_malloc (sizeof (gchar) * 128);
       snprintf (buf, 128, "%02d:%02d", event->start_time->hour,
@@ -82,7 +82,7 @@ pal_edit_get_field_val (int i, PalEvent *event, GDate *d)
       return buf;
     case 6:
       if (event->end_time == NULL)
-        return g_strdup (_ ("None"));
+        return g_strdup ("None");
 
       buf = g_malloc (sizeof (gchar) * 128);
       snprintf (buf, 128, "%02d:%02d", event->end_time->hour,
@@ -111,18 +111,18 @@ void
 pal_edit_init (void)
 {
   PalViewEvent initfieldlist[NUM_FIELDS]
-      = { { _ ("Event Description"), TRUE, FALSE },
-          { _ ("Event Type"), TRUE, FALSE },
-          { _ ("Skip Count"), TRUE, FALSE },
-          { _ ("Start Date"), TRUE, FALSE },
-          { _ ("End Date"), TRUE, FALSE },
-          { _ ("Start Time"), TRUE, FALSE },
-          { _ ("End Time"), TRUE, FALSE },
-          { _ ("Hashtable Key"), FALSE, FALSE },
-          { _ ("Date in File"), FALSE, FALSE },
-          { _ ("Event File"), FALSE, FALSE },
-          { _ ("Event Marked on Calendar?"), FALSE, FALSE },
-          { _ ("File Color"), FALSE, FALSE } };
+      = { { "Event Description", TRUE, FALSE },
+          { "Event Type", TRUE, FALSE },
+          { "Skip Count", TRUE, FALSE },
+          { "Start Date", TRUE, FALSE },
+          { "End Date", TRUE, FALSE },
+          { "Start Time", TRUE, FALSE },
+          { "End Time", TRUE, FALSE },
+          { "Hashtable Key", FALSE, FALSE },
+          { "Date in File", FALSE, FALSE },
+          { "Event File", FALSE, FALSE },
+          { "Event Marked on Calendar?", FALSE, FALSE },
+          { "File Color", FALSE, FALSE } };
 
   selectedField = 0;
 

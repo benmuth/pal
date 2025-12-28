@@ -33,34 +33,34 @@ pal_add_suffix (gint number, gchar *suffix, gint buf_size)
   switch (number)
     {
     case 1:
-      snprintf (suffix, buf_size, "%s", _ ("1st"));
+      snprintf (suffix, buf_size, "%s", "1st");
       return;
     case 2:
-      snprintf (suffix, buf_size, "%s", _ ("2nd"));
+      snprintf (suffix, buf_size, "%s", "2nd");
       return;
     case 3:
-      snprintf (suffix, buf_size, "%s", _ ("3rd"));
+      snprintf (suffix, buf_size, "%s", "3rd");
       return;
     case 4:
-      snprintf (suffix, buf_size, "%s", _ ("4th"));
+      snprintf (suffix, buf_size, "%s", "4th");
       return;
     case 5:
-      snprintf (suffix, buf_size, "%s", _ ("5th"));
+      snprintf (suffix, buf_size, "%s", "5th");
       return;
     case 6:
-      snprintf (suffix, buf_size, "%s", _ ("6th"));
+      snprintf (suffix, buf_size, "%s", "6th");
       return;
     case 7:
-      snprintf (suffix, buf_size, "%s", _ ("7th"));
+      snprintf (suffix, buf_size, "%s", "7th");
       return;
     case 8:
-      snprintf (suffix, buf_size, "%s", _ ("8th"));
+      snprintf (suffix, buf_size, "%s", "8th");
       return;
     case 9:
-      snprintf (suffix, buf_size, "%s", _ ("9th"));
+      snprintf (suffix, buf_size, "%s", "9th");
       return;
     case 10:
-      snprintf (suffix, buf_size, "%s", _ ("10th"));
+      snprintf (suffix, buf_size, "%s", "10th");
       return;
 
     default:
@@ -83,9 +83,9 @@ static gchar *
 pal_add_get_range (GDate *date)
 {
   pal_output_fg (BRIGHT, GREEN, "> ");
-  g_print (_ ("Does the event have start and end dates? "));
+  g_print ("Does the event have start and end dates? ");
 
-  if (pal_rl_get_y_n (_ ("[y/n]: ")))
+  if (pal_rl_get_y_n ("[y/n]: "))
     {
       GDate *d1 = NULL;
       GDate *d2 = NULL;
@@ -118,13 +118,13 @@ pal_add_get_range (GDate *date)
 	        pal_rl_default_text = buf;
 	        rl_pre_input_hook = (rl_hook_func_t*) pal_rl_default_text_fn;
 
-		s = pal_rl_get_line(_("Start date: "), y, 0);
+		s = pal_rl_get_line("Start date: ", y, 0);
 		g_print("\n");
 
 		rl_pre_input_hook = NULL;
 #endif
 
-              s = pal_rl_get_line_default (_ ("Start date: "), y, 0, buf);
+              s = pal_rl_get_line_default ("Start date: ", y, 0, buf);
               g_print ("\n");
 
               d1 = get_query_date (s, TRUE);
@@ -136,7 +136,7 @@ pal_add_get_range (GDate *date)
           clrtobot ();
           while (d2 == NULL)
             {
-              s = pal_rl_get_raw_line (_ ("End date (blank is none): "), y + 1,
+              s = pal_rl_get_raw_line ("End date (blank is none): ", y + 1,
                                        0);
 
               if (*s == 0)
@@ -154,7 +154,7 @@ pal_add_get_range (GDate *date)
                   if (g_date_days_between (d1, d2) < 1)
                     {
                       pal_output_error (
-                          _ ("ERROR: End date must be after start date.\n"));
+                          "ERROR: End date must be after start date.\n");
                       clrtobot ();
                       g_date_free (d2);
                       d2 = NULL;
@@ -168,14 +168,14 @@ pal_add_get_range (GDate *date)
           clrtobot ();
 
           g_date_strftime (buf, 1024, "%a %e %b %Y", d1);
-          pal_output_fg (BRIGHT, GREEN, _ ("Start date: "));
+          pal_output_fg (BRIGHT, GREEN, "Start date: ");
           g_print ("%s\n", buf);
 
           g_date_strftime (buf, 1024, "%a %e %b %Y", d2);
-          pal_output_fg (BRIGHT, GREEN, _ ("End date: "));
+          pal_output_fg (BRIGHT, GREEN, "End date: ");
           g_print ("%s\n", buf);
 
-          snprintf (buf, 1024, "%s ", _ ("Accept? [y/n]:"));
+          snprintf (buf, 1024, "%s ", "Accept? [y/n]:");
         }
       while (!pal_rl_get_y_n (buf));
 
@@ -200,7 +200,7 @@ pal_add_get_recur (GDate *date)
   (void)x;
 
   pal_output_fg (BRIGHT, GREEN, "> ");
-  g_print (_ ("Select how often this event occurs\n"));
+  g_print ("Select how often this event occurs\n");
 
   for (i = 0; i < PAL_NUM_EVENTTYPES; i++)
     {
@@ -227,7 +227,7 @@ pal_add_get_recur (GDate *date)
       getyx (stdscr, prompty, promptx);
       (void)promptx;
 
-      selection = pal_rl_get_line (_ ("Select type: "), prompty, 0);
+      selection = pal_rl_get_line ("Select type: ", prompty, 0);
 
       if (sscanf (selection, "%d%*s", &sel) != 1)
         {
@@ -249,7 +249,7 @@ pal_add_get_recur (GDate *date)
 
       descr = PalEventTypes[sel].get_descr (date);
       move (y, 0);
-      pal_output_fg (BRIGHT, GREEN, _ ("Event type: "));
+      pal_output_fg (BRIGHT, GREEN, "Event type: ");
       g_print ("%s\n", descr);
       clrtobot ();
       g_free (descr);
@@ -268,14 +268,14 @@ pal_add_get_desc (void)
   char *desc = NULL;
   int y, x;
   pal_output_fg (BRIGHT, GREEN, "> ");
-  g_print (_ ("What is the description of the event?\n"));
+  g_print ("What is the description of the event?\n");
 
   getyx (stdscr, y, x);
 
   move (y, x);
   clrtobot ();
 
-  desc = pal_rl_get_line (_ ("Description: "), y, x);
+  desc = pal_rl_get_line ("Description: ", y, x);
   rl_pre_input_hook = NULL;
 
   g_print ("\n");
@@ -292,7 +292,7 @@ pal_add_get_file (void)
 
   pal_output_fg (BRIGHT, GREEN, "> ");
   g_print (
-      _ ("Calendar file (usually ending with \".pal\") to add event to:\n"));
+      "Calendar file (usually ending with \".pal\") to add event to:\n");
 
   int y, x;
   getyx (stdscr, y, x);
@@ -305,7 +305,7 @@ pal_add_get_file (void)
 
       prompt_again = FALSE;
 
-      filename = pal_rl_get_line_default (_ ("Filename: "), y, 0,
+      filename = pal_rl_get_line_default ("Filename: ", y, 0,
                                           g_strdup ("~/.pal/"));
 
       /* clear any filename completions */
@@ -326,7 +326,7 @@ pal_add_get_file (void)
           if (g_file_test (filename, G_FILE_TEST_IS_DIR))
             {
               g_print ("\n");
-              pal_output_error (_ ("ERROR: %s is a directory.\n"), filename);
+              pal_output_error ("ERROR: %s is a directory.\n", filename);
               prompt_again = TRUE;
             }
         }
@@ -337,9 +337,9 @@ pal_add_get_file (void)
 
           /* ask to create the file if it doesn't exist */
           g_print ("\n");
-          pal_output_error (_ ("WARNING: %s does not exist.\n"), filename);
+          pal_output_error ("WARNING: %s does not exist.\n", filename);
 
-          if (!pal_rl_get_y_n (_ ("Create? [y/n]: ")))
+          if (!pal_rl_get_y_n ("Create? [y/n]: "))
             {
               move (y, x);
               clrtobot ();
@@ -352,7 +352,7 @@ pal_add_get_file (void)
               if (file == NULL)
                 {
                   move (y + 1, 0);
-                  pal_output_error (_ ("ERROR: Can't create %s.\n"), filename);
+                  pal_output_error ("ERROR: Can't create %s.\n", filename);
                   clrtobot ();
 
                   prompt_again = TRUE;
@@ -365,17 +365,17 @@ pal_add_get_file (void)
 
                   g_print ("\n");
                   pal_output_fg (BRIGHT, GREEN, "> ");
-                  g_print (_ ("Information for %s:\n"), filename);
+                  g_print ("Information for %s:\n", filename);
                   getyx (stdscr, y, x);
                   do
                     markers = pal_rl_get_line (
-                        _ ("2 character marker for calendar: "), y, 0);
+                        "2 character marker for calendar: ", y, 0);
                   while (g_utf8_strlen (markers, -1) != 2
                          || markers[0] == '#');
 
                   g_print ("\n");
                   getyx (stdscr, y, x);
-                  event_type = pal_rl_get_line (_ ("Calendar title: "), y, 0);
+                  event_type = pal_rl_get_line ("Calendar title: ", y, 0);
 
                   top_line
                       = g_strconcat (markers, " ", event_type, "\n", NULL);
@@ -383,10 +383,10 @@ pal_add_get_file (void)
                   g_print ("\n");
                   pal_output_fg (BRIGHT, RED, "> ");
                   g_print ("%s\n",
-                           _ ("If you want events in this new calendar file "
+                           "If you want events in this new calendar file "
                               "to appear when you run pal,\n  you need to "
-                              "manually update ~/.pal/pal.conf"));
-                  g_print ("%s\n", _ ("Press any key to continue."));
+                              "manually update ~/.pal/pal.conf");
+                  g_print ("%s\n", "Press any key to continue.");
                   getch ();
 
                   fputs (top_line, file);
@@ -424,8 +424,8 @@ pal_add_write_file (gchar *filename, gchar *key, gchar *desc)
       file = fopen (filename, "r");
       if (file == NULL)
         {
-          pal_output_error (_ ("ERROR: Can't read from file %s.\n"), filename);
-          if (!pal_rl_get_y_n (_ ("Try again? [y/n]: ")))
+          pal_output_error ("ERROR: Can't read from file %s.\n", filename);
+          if (!pal_rl_get_y_n ("Try again? [y/n]: "))
             return;
         }
     }
@@ -442,8 +442,8 @@ pal_add_write_file (gchar *filename, gchar *key, gchar *desc)
       file = fopen (filename, "a");
       if (file == NULL)
         {
-          pal_output_error (_ ("ERROR: Can't write to file %s.\n"), filename);
-          if (!pal_rl_get_y_n (_ ("Try again? [y/n]: ")))
+          pal_output_error ("ERROR: Can't write to file %s.\n", filename);
+          if (!pal_rl_get_y_n ("Try again? [y/n]: "))
             return;
         }
     }
@@ -457,7 +457,7 @@ pal_add_write_file (gchar *filename, gchar *key, gchar *desc)
   fputs (write_line, file);
   g_print ("\n");
   pal_output_fg (BRIGHT, GREEN, ">>> ");
-  g_print (_ ("Wrote new event \"%s %s\" to %s.\n"), key, desc, filename);
+  g_print ("Wrote new event \"%s %s\" to %s.\n", key, desc, filename);
   g_free (write_line);
   fclose (file);
 }
@@ -473,10 +473,10 @@ pal_add_event (GDate *selected_date)
 
   clear ();
   pal_output_fg (BRIGHT, GREEN, "* * * ");
-  pal_output_attr (BRIGHT, _ ("Add an event"));
+  pal_output_attr (BRIGHT, "Add an event");
   pal_output_fg (BRIGHT, GREEN, " * * *\n");
 
-  pal_output_fg (BRIGHT, GREEN, _ ("Selected date: "));
+  pal_output_fg (BRIGHT, GREEN, "Selected date: ");
   g_date_strftime (buf, 128, settings->date_fmt, selected_date);
   pal_output_attr (BRIGHT, buf);
   pal_output_fg (BRIGHT, GREEN, "\n");
@@ -487,7 +487,7 @@ pal_add_event (GDate *selected_date)
   key = pal_add_get_recur (selected_date);
 
   g_print ("\n");
-  pal_output_fg (BRIGHT, GREEN, _ ("Date (in pal's format):"));
+  pal_output_fg (BRIGHT, GREEN, "Date (in pal's format):");
   g_print (" %s\n\n", key);
   description = pal_add_get_desc ();
 

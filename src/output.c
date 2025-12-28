@@ -310,9 +310,9 @@ pal_output_cal (gint num_lines, const GDate *today)
   memcpy (date, today, sizeof (GDate));
 
   if (settings->week_start_monday)
-    week_hdr = g_strdup (_ ("Mo   Tu   We   Th   Fr   Sa   Su"));
+    week_hdr = g_strdup ("Mo   Tu   We   Th   Fr   Sa   Su");
   else
-    week_hdr = g_strdup (_ ("Su   Mo   Tu   We   Th   Fr   Sa"));
+    week_hdr = g_strdup ("Su   Mo   Tu   We   Th   Fr   Sa");
 
   /* if showing enough lines, show previous week. */
   if (num_lines > 3)
@@ -539,15 +539,15 @@ pal_output_date_line (const GDate *date)
 
   diff = g_date_days_between (today, date);
   if (diff == 0)
-    pal_output_fg (BRIGHT, RED, "%s", _ ("Today"));
+    pal_output_fg (BRIGHT, RED, "%s", "Today");
   else if (diff == 1)
-    pal_output_fg (BRIGHT, YELLOW, "%s", _ ("Tomorrow"));
+    pal_output_fg (BRIGHT, YELLOW, "%s", "Tomorrow");
   else if (diff == -1)
-    g_print ("%s", _ ("Yesterday"));
+    g_print ("%s", "Yesterday");
   else if (diff > 1)
-    g_print (_ ("%d days away"), diff);
+    g_print ("%d days away", diff);
   else if (diff < -1)
-    g_print (_ ("%d days ago"), -1 * diff);
+    g_print ("%d days ago", -1 * diff);
 
   g_print ("\n");
 
@@ -593,13 +593,13 @@ pal_output_date (GDate *date, gboolean show_empty_days, int selected_event)
               g_date_strftime (pretty_date, 128, settings->compact_date_fmt,
                                date);
               pal_output_attr (BRIGHT, "  %s ", pretty_date);
-              g_print ("%s\n", _ ("No events."));
+              g_print ("%s\n", "No events.");
 
               numlines++;
             }
           else
             {
-              g_print ("%s\n", _ ("No events."));
+              g_print ("%s\n", "No events.");
               numlines++;
             }
         }

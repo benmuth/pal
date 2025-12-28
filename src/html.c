@@ -67,17 +67,17 @@ pal_html_month (GDate *date, gboolean force_month_label, const GDate *today)
   fputs ("<tr>\n", stdout);
 
   if (!settings->week_start_monday)
-    g_print ("%s%s%s\n", start, _ ("Sunday"), end);
+    g_print ("%s%s%s\n", start, "Sunday", end);
 
-  g_print ("%s%s%s\n", start, _ ("Monday"), end);
-  g_print ("%s%s%s\n", start, _ ("Tuesday"), end);
-  g_print ("%s%s%s\n", start, _ ("Wednesday"), end);
-  g_print ("%s%s%s\n", start, _ ("Thursday"), end);
-  g_print ("%s%s%s\n", start, _ ("Friday"), end);
-  g_print ("%s%s%s\n", start, _ ("Saturday"), end);
+  g_print ("%s%s%s\n", start, "Monday", end);
+  g_print ("%s%s%s\n", start, "Tuesday", end);
+  g_print ("%s%s%s\n", start, "Wednesday", end);
+  g_print ("%s%s%s\n", start, "Thursday", end);
+  g_print ("%s%s%s\n", start, "Friday", end);
+  g_print ("%s%s%s\n", start, "Saturday", end);
 
   if (settings->week_start_monday)
-    g_print ("%s%s%s\n", start, _ ("Sunday"), end);
+    g_print ("%s%s%s\n", start, "Sunday", end);
 
   fputs ("</tr>\n", stdout);
 
@@ -246,6 +246,6 @@ pal_html_out (void)
     pal_html_month (date, TRUE, today);
 
   g_print ("<div class='pal-tagline'><p><i>%s</i></p></div>\n",
-           _ ("Calendar created with <a "
-              "href='http://palcal.sourceforge.net/'>pal</a>."));
+           "Calendar created with <a "
+              "href='http://palcal.sourceforge.net/'>pal</a>.");
 }

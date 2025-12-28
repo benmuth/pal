@@ -109,8 +109,7 @@ pal_search_view (const gchar *search_string, GDate *date, const gint window,
 
   pal_output_attr (
       BRIGHT,
-      _ ("[ Begin search results: %s ]\n[ From %s to %s inclusive ]\n\n"),
-      search_string, start_date, end_date);
+      "[ Begin search results: %s ]\n[ From %s to %s inclusive ]\n\n",       search_string, start_date, end_date);
 
   item = g_list_first (hit_list);
 
@@ -167,10 +166,10 @@ pal_search_view (const gchar *search_string, GDate *date, const gint window,
   if (settings->compact_list)
     g_print ("\n");
 
-  pal_output_attr (BRIGHT, _ ("[ End search results: %s ]"), search_string);
+  pal_output_attr (BRIGHT, "[ End search results: %s ]", search_string);
   pal_output_attr (
       BRIGHT,
-      ngettext ("[ %d event found ]\n", "[ %d events found ]\n", hit_count),
+      hit_count == 1 ? "[ %d event found ]\n" : "[ %d events found ]\n",
       hit_count);
 
   return hit_count;

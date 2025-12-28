@@ -83,26 +83,26 @@ get_query_date (gchar *in_string, gboolean show_error)
   g_date_set_time_t (to_show, time (NULL));
 
   /* these could be better... */
-  if (strncmp (date_string, _ ("tomorrow"), strlen (_ ("tomorrow"))) == 0)
+  if (strncmp (date_string, "tomorrow", strlen ("tomorrow")) == 0)
     {
       g_date_add_days (to_show, 1);
       g_free (date_string);
       return to_show;
     }
-  if (strncmp (date_string, _ ("yesterday"), strlen (_ ("yesterday"))) == 0)
+  if (strncmp (date_string, "yesterday", strlen ("yesterday")) == 0)
     {
       g_date_subtract_days (to_show, 1);
       g_free (date_string);
       return to_show;
     }
-  if (strncmp (date_string, _ ("today"), strlen (_ ("today"))) == 0)
+  if (strncmp (date_string, "today", strlen ("today")) == 0)
     {
       g_date_subtract_days (to_show, 0);
       g_free (date_string);
       return to_show;
     }
-  if (strncmp (date_string, _ ("mo"), strlen (_ ("mo"))) == 0
-      || strncmp (date_string, _ ("next mo"), strlen (_ ("next mo"))) == 0)
+  if (strncmp (date_string, "mo", strlen ("mo")) == 0
+      || strncmp (date_string, "next mo", strlen ("next mo")) == 0)
     {
       do
         g_date_add_days (to_show, 1);
@@ -110,8 +110,8 @@ get_query_date (gchar *in_string, gboolean show_error)
       g_free (date_string);
       return to_show;
     }
-  if (strncmp (date_string, _ ("tu"), strlen (_ ("tu"))) == 0
-      || strncmp (date_string, _ ("next tu"), strlen (_ ("next tu"))) == 0)
+  if (strncmp (date_string, "tu", strlen ("tu")) == 0
+      || strncmp (date_string, "next tu", strlen ("next tu")) == 0)
     {
       do
         g_date_add_days (to_show, 1);
@@ -119,8 +119,8 @@ get_query_date (gchar *in_string, gboolean show_error)
       g_free (date_string);
       return to_show;
     }
-  if (strncmp (date_string, _ ("we"), strlen (_ ("we"))) == 0
-      || strncmp (date_string, _ ("next we"), strlen (_ ("next we"))) == 0)
+  if (strncmp (date_string, "we", strlen ("we")) == 0
+      || strncmp (date_string, "next we", strlen ("next we")) == 0)
     {
       do
         g_date_add_days (to_show, 1);
@@ -128,8 +128,8 @@ get_query_date (gchar *in_string, gboolean show_error)
       g_free (date_string);
       return to_show;
     }
-  if (strncmp (date_string, _ ("th"), strlen (_ ("th"))) == 0
-      || strncmp (date_string, _ ("next th"), strlen (_ ("next th"))) == 0)
+  if (strncmp (date_string, "th", strlen ("th")) == 0
+      || strncmp (date_string, "next th", strlen ("next th")) == 0)
     {
       do
         g_date_add_days (to_show, 1);
@@ -137,8 +137,8 @@ get_query_date (gchar *in_string, gboolean show_error)
       g_free (date_string);
       return to_show;
     }
-  if (strncmp (date_string, _ ("fr"), strlen (_ ("fr"))) == 0
-      || strncmp (date_string, _ ("next fr"), strlen (_ ("next fr"))) == 0)
+  if (strncmp (date_string, "fr", strlen ("fr")) == 0
+      || strncmp (date_string, "next fr", strlen ("next fr")) == 0)
     {
       do
         g_date_add_days (to_show, 1);
@@ -146,16 +146,16 @@ get_query_date (gchar *in_string, gboolean show_error)
       g_free (date_string);
       return to_show;
     }
-  if (strncmp (date_string, _ ("sa"), strlen (_ ("sa"))) == 0
-      || strncmp (date_string, _ ("next sa"), strlen (_ ("next sa"))) == 0)
+  if (strncmp (date_string, "sa", strlen ("sa")) == 0
+      || strncmp (date_string, "next sa", strlen ("next sa")) == 0)
     {
       do
         g_date_add_days (to_show, 1);
       while (g_date_get_weekday (to_show) != 6);
       return to_show;
     }
-  if (strncmp (date_string, _ ("su"), strlen (_ ("su"))) == 0
-      || strncmp (date_string, _ ("next su"), strlen (_ ("next su"))) == 0)
+  if (strncmp (date_string, "su", strlen ("su")) == 0
+      || strncmp (date_string, "next su", strlen ("next su")) == 0)
     {
       do
         g_date_add_days (to_show, 1);
@@ -163,7 +163,7 @@ get_query_date (gchar *in_string, gboolean show_error)
       g_free (date_string);
       return to_show;
     }
-  if (strncmp (date_string, _ ("last mo"), strlen (_ ("last mo"))) == 0)
+  if (strncmp (date_string, "last mo", strlen ("last mo")) == 0)
     {
       do
         g_date_subtract_days (to_show, 1);
@@ -171,7 +171,7 @@ get_query_date (gchar *in_string, gboolean show_error)
       g_free (date_string);
       return to_show;
     }
-  if (strncmp (date_string, _ ("last tu"), strlen (_ ("last tu"))) == 0)
+  if (strncmp (date_string, "last tu", strlen ("last tu")) == 0)
     {
       do
         g_date_subtract_days (to_show, 1);
@@ -179,7 +179,7 @@ get_query_date (gchar *in_string, gboolean show_error)
       g_free (date_string);
       return to_show;
     }
-  if (strncmp (date_string, _ ("last we"), strlen (_ ("last we"))) == 0)
+  if (strncmp (date_string, "last we", strlen ("last we")) == 0)
     {
       do
         g_date_subtract_days (to_show, 1);
@@ -187,7 +187,7 @@ get_query_date (gchar *in_string, gboolean show_error)
       g_free (date_string);
       return to_show;
     }
-  if (strncmp (date_string, _ ("last th"), strlen (_ ("last th"))) == 0)
+  if (strncmp (date_string, "last th", strlen ("last th")) == 0)
     {
       do
         g_date_subtract_days (to_show, 1);
@@ -195,7 +195,7 @@ get_query_date (gchar *in_string, gboolean show_error)
       g_free (date_string);
       return to_show;
     }
-  if (strncmp (date_string, _ ("last fr"), strlen (_ ("last fr"))) == 0)
+  if (strncmp (date_string, "last fr", strlen ("last fr")) == 0)
     {
       do
         g_date_subtract_days (to_show, 1);
@@ -203,7 +203,7 @@ get_query_date (gchar *in_string, gboolean show_error)
       g_free (date_string);
       return to_show;
     }
-  if (strncmp (date_string, _ ("last sa"), strlen (_ ("last sa"))) == 0)
+  if (strncmp (date_string, "last sa", strlen ("last sa")) == 0)
     {
       do
         g_date_subtract_days (to_show, 1);
@@ -211,7 +211,7 @@ get_query_date (gchar *in_string, gboolean show_error)
       g_free (date_string);
       return to_show;
     }
-  if (strncmp (date_string, _ ("last su"), strlen (_ ("last su"))) == 0)
+  if (strncmp (date_string, "last su", strlen ("last su")) == 0)
     {
       do
         g_date_subtract_days (to_show, 1);
@@ -224,8 +224,7 @@ get_query_date (gchar *in_string, gboolean show_error)
   {
     regex_t preg;
 
-    regcomp (&preg, _ ("^[0-9]+ days away$"),
-             REG_ICASE | REG_NOSUB | REG_EXTENDED);
+    regcomp (&preg, "^[0-9]+ days away$",              REG_ICASE | REG_NOSUB | REG_EXTENDED);
 
     if (regexec (&preg, date_string, 0, NULL, 0) == 0)
       {
@@ -243,8 +242,7 @@ get_query_date (gchar *in_string, gboolean show_error)
       }
 
     regfree (&preg);
-    regcomp (&preg, _ ("^[0-9]+ days ago$"),
-             REG_ICASE | REG_NOSUB | REG_EXTENDED);
+    regcomp (&preg, "^[0-9]+ days ago$",              REG_ICASE | REG_NOSUB | REG_EXTENDED);
 
     if (regexec (&preg, date_string, 0, NULL, 0) == 0)
       {
@@ -370,21 +368,19 @@ get_query_date (gchar *in_string, gboolean show_error)
   if (show_error)
     {
       /* if we got here, there was an error */
-      pal_output_error (_ ("ERROR: The following date is not valid: %s\n"),
-                        date_string);
-      pal_output_error ("       %s\n", _ ("Valid date formats include:"));
+      pal_output_error ("ERROR: The following date is not valid: %s\n",                         date_string);
+      pal_output_error ("       %s\n", "Valid date formats include:");
       pal_output_error ("       %s '%s', '%s', '%s',\n",
-                        _ ("dd, mmdd, yyyymmdd,"), _ ("yesterday"),
-                        _ ("today"), _ ("tomorrow"));
-      pal_output_error ("       %s\n", _ ("'n days away', 'n days ago',"));
-      pal_output_error ("       %s\n", _ ("first two letters of weekday,"));
+                        "dd, mmdd, yyyymmdd,", "yesterday",                         "today", "tomorrow");
+      pal_output_error ("       %s\n", "'n days away', 'n days ago',");
+      pal_output_error ("       %s\n", "first two letters of weekday,");
       pal_output_error (
           "       %s\n",
-          _ ("'next ' followed by first two letters of weekday,"));
+          "'next ' followed by first two letters of weekday,");
       pal_output_error (
           "       %s\n",
-          _ ("'last ' followed by first two letters of weekday,"));
-      pal_output_error ("       %s\n", _ ("'1 Jan 2000', 'Jan 1 2000', etc."));
+          "'last ' followed by first two letters of weekday,");
+      pal_output_error ("       %s\n", "'1 Jan 2000', 'Jan 1 2000', etc.");
     }
   g_date_free (to_show);
   g_free (date_string);
@@ -403,9 +399,8 @@ view_details (void)
       g_print ("\n");
       pal_output_fg (BRIGHT, RED, "> ");
       pal_output_wrap (
-          _ ("NOTE: You can use -r to specify the range of days to search.  "
-             "By default, pal searches days within one year of today."),
-          2, 2);
+          "NOTE: You can use -r to specify the range of days to search.  "
+             "By default, pal searches days within one year of today.",           2, 2);
       settings->range_days = 365;
     }
 
@@ -454,64 +449,56 @@ parse_arg (gchar **args, gint on_arg, gint total_args)
   if (strcmp (*args, "-h") == 0 || strcmp (*args, "--help") == 0)
     {
       g_print ("%s %s - %s\n", "pal", PAL_VERSION,
-               _ ("Copyright (C) 2006, Scott Kuhl"));
+               "Copyright (C) 2006, Scott Kuhl");
 
       g_print ("  ");
-      pal_output_wrap (_ ("pal is licensed under the GNU General Public "
-                          "License and has NO WARRANTY."),
-                       2, 2);
+      pal_output_wrap ("pal is licensed under the GNU General Public "
+                          "License and has NO WARRANTY.",                        2, 2);
       g_print ("\n");
 
       pal_output_wrap (
-          _ (" -d date      Show events on the given date.  Valid formats for "
+          " -d date      Show events on the given date.  Valid formats for "
              "date include: dd, mmdd, yyyymmdd, 'Jan 1 2000'.  Run 'man pal' "
-             "for a list of all valid formats."),
-          0, 16);
+             "for a list of all valid formats.",           0, 16);
       pal_output_wrap (
-          _ (" -r n         Display events within n days after today or a "
-             "date used with -d. (default: n=0, show nothing)"),
-          0, 16);
-      pal_output_wrap (_ (" -r p-n       Display events within p days before "
-                          "and n days after today or a date used with -d."),
-                       0, 16);
+          " -r n         Display events within n days after today or a "
+             "date used with -d. (default: n=0, show nothing)",           0, 16);
+      pal_output_wrap (" -r p-n       Display events within p days before "
+                          "and n days after today or a date used with -d.",                        0, 16);
       pal_output_wrap (
-          _ (" -s regex     Search for events matching the regular "
-             "expression. Use -r to select range of days to search."),
-          0, 16);
+          " -s regex     Search for events matching the regular "
+             "expression. Use -r to select range of days to search.",           0, 16);
       pal_output_wrap (
-          _ (" -x n         Expunge events that are n or more days old."), 0,
+          " -x n         Expunge events that are n or more days old.", 0,
           16);
 
       pal_output_wrap (
-          _ (" -c n         Display calendar with n lines. (default: 5)"), 0,
+          " -c n         Display calendar with n lines. (default: 5)", 0,
           16);
       pal_output_wrap (
-          _ (" -f file      Load 'file' instead of ~/.pal/pal.conf"), 0, 16);
-      pal_output_wrap (_ (" -u username  Load /home/username/.pal/pal.conf"),
-                       0, 16);
-      pal_output_wrap (_ (" -p palfile   Load *.pal file only (overrides "
-                          "files loaded from pal.conf)"),
-                       0, 16);
+          " -f file      Load 'file' instead of ~/.pal/pal.conf", 0, 16);
+      pal_output_wrap (" -u username  Load /home/username/.pal/pal.conf",                        0, 16);
+      pal_output_wrap (" -p palfile   Load *.pal file only (overrides "
+                          "files loaded from pal.conf)",                        0, 16);
       pal_output_wrap (
-          _ (" -m           Add/Modify/Delete events interactively."), 0, 16);
+          " -m           Add/Modify/Delete events interactively.", 0, 16);
       pal_output_wrap (
-          _ (" --color      Force colors, regardless of terminal type."), 0,
+          " --color      Force colors, regardless of terminal type.", 0,
           16);
       pal_output_wrap (
-          _ (" --nocolor    Force no colors, regardless of terminal type."), 0,
+          " --nocolor    Force no colors, regardless of terminal type.", 0,
           16);
       pal_output_wrap (
-          _ (" --mail       Generate output readable by sendmail."), 0, 16);
-      pal_output_wrap (_ (" --html       Generate HTML calendar.  Set size of "
-                          "calendar with -c."),
-                       0, 16);
-      pal_output_wrap (_ (" -v           Verbose output."), 0, 16);
-      pal_output_wrap (_ (" --version    Display version information."), 0,
+          " --mail       Generate output readable by sendmail.", 0, 16);
+      pal_output_wrap (" --html       Generate HTML calendar.  Set size of "
+                          "calendar with -c.",                        0, 16);
+      pal_output_wrap (" -v           Verbose output.", 0, 16);
+      pal_output_wrap (" --version    Display version information.", 0,
                        16);
-      pal_output_wrap (_ (" -h, --help   Display this help message."), 0, 16);
+      pal_output_wrap (" -h, --help   Display this help message.", 0, 16);
 
       g_print ("\n");
-      pal_output_wrap (_ ("Type \"man pal\" for more information."), 0, 16);
+      pal_output_wrap ("Type \"man pal\" for more information.", 0, 16);
       exit (0);
     }
 
@@ -530,9 +517,9 @@ parse_arg (gchar **args, gint on_arg, gint total_args)
           settings->range_neg_days = 0;
 
           pal_output_error ("%s\n",
-                            _ ("ERROR: Number required after -r argument."));
+                            "ERROR: Number required after -r argument.");
           pal_output_error ("       %s\n",
-                            _ ("Use --help for more information."));
+                            "Use --help for more information.");
           return on_arg - 1;
         }
 
@@ -560,9 +547,9 @@ parse_arg (gchar **args, gint on_arg, gint total_args)
           || sscanf (*args, "%d", &(settings->cal_lines)) != 1)
         {
           pal_output_error ("%s\n",
-                            _ ("ERROR: Number required after -c argument."));
+                            "ERROR: Number required after -c argument.");
           pal_output_error ("       %s\n",
-                            _ ("Use --help for more information."));
+                            "Use --help for more information.");
           on_arg--;
         }
       return on_arg;
@@ -575,9 +562,9 @@ parse_arg (gchar **args, gint on_arg, gint total_args)
       if (on_arg > total_args)
         {
           pal_output_error ("%s\n",
-                            _ ("ERROR: Date required after -d argument."));
+                            "ERROR: Date required after -d argument.");
           pal_output_error ("       %s\n",
-                            _ ("Use --help for more information."));
+                            "Use --help for more information.");
           on_arg--;
         }
       else
@@ -587,7 +574,7 @@ parse_arg (gchar **args, gint on_arg, gint total_args)
           g_free (utf8arg);
           if (settings->query_date == NULL)
             pal_output_error (
-                _ ("NOTE: Use quotes around the date if it has spaces.\n"));
+                "NOTE: Use quotes around the date if it has spaces.\n");
         }
       return on_arg;
     }
@@ -601,7 +588,7 @@ parse_arg (gchar **args, gint on_arg, gint total_args)
   if (strcmp (*args, "-a") == 0)
     {
       settings->manage_events = TRUE;
-      pal_output_error (_ ("WARNING: -a is deprecated, use -m instead.\n"));
+      pal_output_error ("WARNING: -a is deprecated, use -m instead.\n");
       return on_arg;
     }
 
@@ -639,7 +626,7 @@ parse_arg (gchar **args, gint on_arg, gint total_args)
   if (strcmp (*args, "--version") == 0)
     {
       g_print ("pal %s\n", PAL_VERSION);
-      g_print (_ ("Compiled with prefix: %s\n"), PREFIX);
+      g_print ("Compiled with prefix: %s\n", PREFIX);
       exit (0);
     }
 
@@ -651,9 +638,9 @@ parse_arg (gchar **args, gint on_arg, gint total_args)
       if (on_arg > total_args || sscanf (*args, "%s", tmp) != 1)
         {
           pal_output_error (
-              "%s\n", _ ("ERROR: Pal conf file required after -f argument."));
+              "%s\n", "ERROR: Pal conf file required after -f argument.");
           pal_output_error ("       %s\n",
-                            _ ("Use --help for more information."));
+                            "Use --help for more information.");
           return on_arg;
         }
 
@@ -671,9 +658,9 @@ parse_arg (gchar **args, gint on_arg, gint total_args)
       if (on_arg > total_args || sscanf (*args, "%s", tmp) != 1)
         {
           pal_output_error (
-              "%s\n", _ ("ERROR: *.pal file required after -p argument."));
+              "%s\n", "ERROR: *.pal file required after -p argument.");
           pal_output_error ("       %s\n",
-                            _ ("Use --help for more information."));
+                            "Use --help for more information.");
           return on_arg;
         }
 
@@ -689,9 +676,9 @@ parse_arg (gchar **args, gint on_arg, gint total_args)
       if (on_arg > total_args || sscanf (*args, "%s", username) != 1)
         {
           pal_output_error ("%s\n",
-                            _ ("ERROR: Username required after -u argument."));
+                            "ERROR: Username required after -u argument.");
           pal_output_error ("       %s\n",
-                            _ ("Use --help for more information."));
+                            "Use --help for more information.");
           return on_arg;
         }
 
@@ -711,9 +698,9 @@ parse_arg (gchar **args, gint on_arg, gint total_args)
         {
           pal_output_error (
               "%s\n",
-              _ ("ERROR: Regular expression required after -s argument."));
+              "ERROR: Regular expression required after -s argument.");
           pal_output_error ("       %s\n",
-                            _ ("Use --help for more information."));
+                            "Use --help for more information.");
         }
       else
         settings->search_string = g_strdup (*args);
@@ -729,17 +716,17 @@ parse_arg (gchar **args, gint on_arg, gint total_args)
           || sscanf (*args, "%d", &(settings->expunge)) != 1)
         {
           pal_output_error ("%s\n",
-                            _ ("ERROR: Number required after -x argument."));
+                            "ERROR: Number required after -x argument.");
           pal_output_error ("       %s\n",
-                            _ ("Use --help for more information."));
+                            "Use --help for more information.");
           on_arg--;
         }
 
       return on_arg;
     }
 
-  pal_output_error ("%s %s\n", _ ("ERROR: Bad argument:"), *args);
-  pal_output_error ("       %s\n", _ ("Use --help for more information."));
+  pal_output_error ("%s %s\n", "ERROR: Bad argument:", *args);
+  pal_output_error ("       %s\n", "Use --help for more information.");
 
   return on_arg + 1;
 }
@@ -829,8 +816,6 @@ main (gint argc, gchar **argv)
   g_set_print_handler (pal_output_handler);
   g_set_printerr_handler (pal_output_handler);
 
-  textdomain ("pal");
-  bind_textdomain_codeset ("pal", "utf-8");
   if (setlocale (LC_MESSAGES, "") == NULL || setlocale (LC_TIME, "") == NULL
       || setlocale (LC_ALL, "") == NULL || setlocale (LC_CTYPE, "") == NULL)
     pal_output_error ("WARNING: Localization failed.\n");
