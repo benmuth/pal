@@ -14,10 +14,15 @@ ifneq ($(VENDOR_PREFIX),)
               -I$(VENDOR_PREFIX)/include/ncursesw
     LIBDIR  = -L$(VENDOR_PREFIX)/lib
     LIBS    = $(VENDOR_PREFIX)/lib/libglib-2.0.a \
+              $(VENDOR_PREFIX)/lib/libintl.a \
               $(VENDOR_PREFIX)/lib/libpcre2-8.a \
               $(VENDOR_PREFIX)/lib/libreadline.a \
               $(VENDOR_PREFIX)/lib/libncursesw.a \
               -lm -lpthread
+# macOS needs additional libraries for glib
+ifeq ($(shell uname -s),Darwin)
+    LIBS += -liconv -framework Foundation
+endif
 else
     # Use system libraries (fallback)
     $(info Using system libraries)
@@ -187,7 +192,12 @@ srpm: dist
 libpal.a: $(OBJ)
 	rm -f libpal.a
 	ar rcv libpal.a $(OBJ)
+# Platform-specific strip command (GNU binutils uses --strip-symbol, macOS doesn't support it)
+ifeq ($(shell uname -s),Darwin)
+	@# macOS strip doesn't support --strip-symbol, skip this step
+else
 	strip --strip-symbol=main libpal.a
+endif
 	ar s libpal.a
 	ranlib libpal.a
 
