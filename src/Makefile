@@ -2,9 +2,29 @@ NAME    = pal
 
 include Makefile.defs
 
-INCLDIR = -I${prefix}/include `pkg-config --cflags glib-2.0`
-LIBDIR  =
-LIBS    = `pkg-config --libs glib-2.0` -lreadline -lncurses
+# Check if vendored dependencies are available
+VENDOR_PREFIX := $(shell if [ -d ../vendor/build ]; then echo $(shell cd .. && pwd)/vendor/build; fi)
+
+ifneq ($(VENDOR_PREFIX),)
+    # Use vendored libraries
+    $(info Using vendored dependencies from $(VENDOR_PREFIX))
+    export PKG_CONFIG_PATH := $(VENDOR_PREFIX)/lib/pkgconfig:$(PKG_CONFIG_PATH)
+    INCLDIR = -I$(VENDOR_PREFIX)/include -I$(VENDOR_PREFIX)/include/glib-2.0 \
+              -I$(VENDOR_PREFIX)/lib/glib-2.0/include \
+              -I$(VENDOR_PREFIX)/include/ncursesw
+    LIBDIR  = -L$(VENDOR_PREFIX)/lib
+    LIBS    = $(VENDOR_PREFIX)/lib/libglib-2.0.a \
+              $(VENDOR_PREFIX)/lib/libpcre2-8.a \
+              $(VENDOR_PREFIX)/lib/libreadline.a \
+              $(VENDOR_PREFIX)/lib/libncursesw.a \
+              -lm -lpthread
+else
+    # Use system libraries (fallback)
+    $(info Using system libraries)
+    INCLDIR = -I${prefix}/include `pkg-config --cflags glib-2.0`
+    LIBDIR  =
+    LIBS    = `pkg-config --libs glib-2.0` -lreadline -lncurses
+endif
 
 ifeq ($(UNITY),1)
       SRC = pal_unity.c
@@ -115,6 +135,16 @@ uninstall-man:
 compile_commands.json:
 	@echo "Generating compile_commands.json for LSP..."
 	@./generate_compile_commands.sh > compile_commands.json
+
+# Build vendored dependencies
+vendor:
+	@echo "Building vendored dependencies..."
+	@$(MAKE) -C ../vendor
+
+# Clean vendored dependencies
+clean-vendor:
+	@echo "Cleaning vendored dependencies..."
+	@$(MAKE) -C ../vendor clean
 
 # Remove binary, object files and emacs backup files
 clean:

@@ -671,17 +671,17 @@ pal_manage (void)
           move (0, 0);
           pal_output_fg (BRIGHT, GREEN, "pal %s\n\n", PAL_VERSION);
 
-          pal_output_fg (BRIGHT, GREEN, _ ("LeftArrow"));
+          pal_output_fg (BRIGHT, GREEN, _ ("LeftArrow or h"));
           g_print (" - %s\n", _ ("Back one day"));
 
           pal_output_fg (BRIGHT, GREEN, _ ("RightArrow"));
-          g_print (" - %s\n", _ ("Forward one day"));
+          g_print (" - %s\n", _ ("Forward one day or l"));
 
-          pal_output_fg (BRIGHT, GREEN, _ ("UpArrow"));
+          pal_output_fg (BRIGHT, GREEN, _ ("UpArrow or k"));
           g_print (" - %s\n", _ ("Back one week or event (if in "
                                  "event selection mode)"));
 
-          pal_output_fg (BRIGHT, GREEN, _ ("DownArrow"));
+          pal_output_fg (BRIGHT, GREEN, _ ("DownArrow or j"));
           g_print (" - %s\n", _ ("Forward one week or event (if in "
                                  "event selection mode)"));
 
