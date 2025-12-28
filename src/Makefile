@@ -14,14 +14,13 @@ ifneq ($(VENDOR_PREFIX),)
               -I$(VENDOR_PREFIX)/include/ncursesw
     LIBDIR  = -L$(VENDOR_PREFIX)/lib
     LIBS    = $(VENDOR_PREFIX)/lib/libglib-2.0.a \
-              $(VENDOR_PREFIX)/lib/libintl.a \
               $(VENDOR_PREFIX)/lib/libpcre2-8.a \
               $(VENDOR_PREFIX)/lib/libreadline.a \
               $(VENDOR_PREFIX)/lib/libncursesw.a \
               -lm -lpthread
 # macOS needs additional libraries for glib
 ifeq ($(shell uname -s),Darwin)
-    LIBS += -liconv -framework Foundation
+    LIBS += $(VENDOR_PREFIX)/lib/libintl.a -liconv -framework Foundation
 endif
 else
     # Use system libraries (fallback)
