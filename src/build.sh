@@ -25,6 +25,16 @@ PREFIX="${PREFIX:-$HOME/.local}"
 VERSION="0.4.2"
 CC="${CC:-gcc}"
 
+# Check for vendored dependencies
+if [ -d ../vendor/build ]; then
+    VENDOR_PREFIX="$(cd .. && pwd)/vendor/build"
+    echo "Using vendored dependencies from $VENDOR_PREFIX"
+    USING_VENDOR=1
+else
+    echo "Using system libraries"
+    USING_VENDOR=0
+fi
+
 # Compiler flags
 if [ "$DEBUG" = "1" ]; then
     CFLAGS="-g -Wall -pedantic -Wstrict-prototypes -DG_DISABLE_DEPRECATED -DDEBUG"
@@ -43,14 +53,27 @@ fi
 
 # Compile
 echo "Compiling..."
+if [ "$USING_VENDOR" = "1" ]; then
+    # Use vendored libraries
+    INCLUDE_FLAGS="-I$VENDOR_PREFIX/include -I$VENDOR_PREFIX/include/glib-2.0 -I$VENDOR_PREFIX/lib/glib-2.0/include -I$VENDOR_PREFIX/include/ncursesw"
+    LINK_FLAGS="$VENDOR_PREFIX/lib/libglib-2.0.a $VENDOR_PREFIX/lib/libintl.a $VENDOR_PREFIX/lib/libpcre2-8.a $VENDOR_PREFIX/lib/libreadline.a $VENDOR_PREFIX/lib/libncursesw.a -lm -lpthread"
+
+    # macOS needs additional libraries
+    if [ "$(uname -s)" = "Darwin" ]; then
+        LINK_FLAGS="$LINK_FLAGS -liconv -framework Foundation"
+    fi
+else
+    # Use system libraries
+    INCLUDE_FLAGS="-I${PREFIX}/include $(pkg-config --cflags glib-2.0)"
+    LINK_FLAGS="$(pkg-config --libs glib-2.0) -lreadline -lncurses"
+fi
+
 $CC $CFLAGS \
-    -I${PREFIX}/include \
-    $(pkg-config --cflags glib-2.0) \
+    $INCLUDE_FLAGS \
     -DPAL_VERSION=\"$VERSION\" \
     -DPREFIX=\"$PREFIX\" \
     $SOURCES \
-    $(pkg-config --libs glib-2.0) \
-    -lreadline -lncurses \
+    $LINK_FLAGS \
     -o pal
 
 # Strip if optimized
