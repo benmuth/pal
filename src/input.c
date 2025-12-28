@@ -517,6 +517,100 @@ get_file_handle (gchar *filename, gboolean show_error)
   return file;
 }
 
+/* Parse a "file" or "file_hide" line from pal.conf
+ * Handles both quoted paths (with spaces) and unquoted paths
+ * Returns TRUE if line was parsed successfully
+ * Sets: path - the file path (caller must provide buffer)
+ *       color - the color name if specified (caller must provide buffer)
+ *       hide - TRUE if this is a "file_hide" directive
+ */
+static gboolean
+parse_file_directive (const gchar *line, gchar *path, gchar *color,
+                      gboolean *hide)
+{
+  const gchar *p = line;
+  const gchar *path_start;
+  const gchar *path_end;
+
+  /* Check for "file " or "file_hide " prefix */
+  if (g_str_has_prefix (p, "file_hide "))
+    {
+      *hide = TRUE;
+      p += 10; /* skip "file_hide " */
+    }
+  else if (g_str_has_prefix (p, "file "))
+    {
+      *hide = FALSE;
+      p += 5; /* skip "file " */
+    }
+  else
+    {
+      return FALSE; /* Not a file directive */
+    }
+
+  /* Skip any leading whitespace after the directive */
+  while (*p == ' ' || *p == '\t')
+    p++;
+
+  /* Check if path is quoted */
+  if (*p == '"')
+    {
+      p++; /* skip opening quote */
+      path_start = p;
+
+      /* Find closing quote */
+      path_end = strchr (p, '"');
+      if (!path_end)
+        return FALSE; /* No closing quote - invalid */
+
+      /* Copy the path (everything between quotes) */
+      strncpy (path, path_start, path_end - path_start);
+      path[path_end - path_start] = '\0';
+
+      p = path_end + 1; /* Move past closing quote */
+    }
+  else
+    {
+      /* Unquoted path - scan until space or end of line */
+      path_start = p;
+
+      /* Find end of path (space, newline, or '(') */
+      while (*p && *p != ' ' && *p != '\t' && *p != '\n' && *p != '(')
+        p++;
+
+      path_end = p;
+
+      /* Copy the path */
+      strncpy (path, path_start, path_end - path_start);
+      path[path_end - path_start] = '\0';
+    }
+
+  /* Now look for optional (color) */
+  color[0] = '\0'; /* Default to no color */
+
+  /* Skip whitespace */
+  while (*p == ' ' || *p == '\t')
+    p++;
+
+  /* Check for (color) */
+  if (*p == '(')
+    {
+      p++; /* skip '(' */
+      const gchar *color_start = p;
+
+      /* Find closing ')' */
+      const gchar *color_end = strchr (p, ')');
+      if (color_end)
+        {
+          /* Copy color name */
+          strncpy (color, color_start, color_end - color_start);
+          color[color_end - color_start] = '\0';
+        }
+    }
+
+  return TRUE;
+}
+
 /* loads calendar files and settings from a pal.conf file */
 GHashTable *
 load_files (void)
@@ -636,20 +730,14 @@ load_files (void)
       color[0] = '\0';
       g_strstrip (s);
 
-      if (sscanf (s, "file %s (%[a-z])\n", text, color) == 2
-          || sscanf (s, "file %s\n", text) == 1)
+      gboolean hide = FALSE;
+      if (parse_file_directive (s, text, color, &hide))
         {
           FILE *pal_file_handle = NULL;
-          gboolean hide = FALSE;
 
           /* skip this line if we're using -p */
           if (settings->pal_file != NULL)
             continue;
-
-          if (sscanf (s, "file_hide %s (%[a-z])\n", text, color) == 2)
-            hide = TRUE;
-          else if (sscanf (s, "file_hide %s\n", text) == 1)
-            hide = TRUE;
 
           if (color[0] != '\0')
             {
