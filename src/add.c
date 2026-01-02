@@ -283,12 +283,114 @@ pal_add_get_desc (void)
   return desc;
 }
 
+/* get the first file from pal.conf */
+static gchar *
+pal_add_get_first_file_from_conf (void)
+{
+  FILE *conf = NULL;
+  gchar line[2048];
+  gchar *first_file = NULL;
+
+  conf = fopen (settings->conf_file, "r");
+  if (conf == NULL)
+    return NULL;
+
+  while (fgets (line, sizeof (line), conf) != NULL)
+    {
+      gchar path[2048] = "";
+
+      g_strstrip (line);
+
+      /* Skip comments and empty lines */
+      if (line[0] == '#' || line[0] == '\0')
+        continue;
+
+      /* Parse file directive - using same logic as load_files() */
+      if (g_str_has_prefix (line, "file_hide ") || g_str_has_prefix (line, "file "))
+        {
+          const gchar *p = line;
+          const gchar *path_start;
+          const gchar *path_end;
+
+          /* Skip "file_hide " or "file " */
+          if (g_str_has_prefix (p, "file_hide "))
+            p += 10;
+          else if (g_str_has_prefix (p, "file "))
+            p += 5;
+
+          /* Skip whitespace */
+          while (*p == ' ' || *p == '\t')
+            p++;
+
+          /* Check if path is quoted */
+          if (*p == '"')
+            {
+              p++; /* skip opening quote */
+              path_start = p;
+
+              /* Find closing quote */
+              path_end = strchr (p, '"');
+              if (!path_end)
+                continue; /* No closing quote - skip this line */
+
+              /* Copy the path (everything between quotes) */
+              size_t path_len = path_end - path_start;
+              if (path_len > 0 && path_len < sizeof (path))
+                {
+                  strncpy (path, path_start, path_len);
+                  path[path_len] = '\0';
+                }
+              else
+                continue; /* Invalid path length */
+            }
+          else
+            {
+              /* Unquoted path - get up to space, paren, or end of line */
+              path_start = p;
+              while (*p != '\0' && *p != ' ' && *p != '\t' && *p != '(' && *p != '\n')
+                p++;
+
+              size_t path_len = p - path_start;
+              if (path_len > 0 && path_len < sizeof (path))
+                {
+                  strncpy (path, path_start, path_len);
+                  path[path_len] = '\0';
+                }
+              else
+                continue; /* Invalid path length */
+            }
+
+          if (path[0] != '\0')
+            {
+
+              /* Expand to full path */
+              gchar full_path[2048];
+              if (path[0] == '~')
+                snprintf (full_path, sizeof (full_path), "%s%s",
+                          g_get_home_dir (), path + 1);
+              else if (path[0] != '/')
+                snprintf (full_path, sizeof (full_path), "%s/.pal/%s",
+                          g_get_home_dir (), path);
+              else
+                snprintf (full_path, sizeof (full_path), "%s", path);
+
+              first_file = g_strdup (full_path);
+              break;
+            }
+        }
+    }
+
+  fclose (conf);
+  return first_file;
+}
+
 /* prompts for a file name */
 static gchar *
 pal_add_get_file (void)
 {
   char *filename = NULL;
   gboolean prompt_again = FALSE;
+  gchar *first_file_from_conf = NULL;
 
   pal_output_fg (BRIGHT, GREEN, "> ");
   g_print (
@@ -298,15 +400,25 @@ pal_add_get_file (void)
   getyx (stdscr, y, x);
   (void)x;
 
+  /* Get first file from pal.conf to use as default (cached) */
+  first_file_from_conf = pal_add_get_first_file_from_conf ();
+
   /* get the filename */
   do
     {
+      gchar *default_path = NULL;
+
       rl_completion_entry_function = rl_filename_completion_function;
 
       prompt_again = FALSE;
 
-      filename = pal_rl_get_line_default ("Filename: ", y, 0,
-                                          g_strdup ("~/.pal/"));
+      /* Use first file from conf if available, otherwise ~/.pal/ */
+      if (first_file_from_conf != NULL)
+        default_path = g_strdup (first_file_from_conf);
+      else
+        default_path = g_strdup ("~/.pal/");
+
+      filename = pal_rl_get_line_default ("Filename: ", y, 0, default_path);
 
       /* clear any filename completions */
       clrtobot ();
@@ -407,6 +519,10 @@ pal_add_get_file (void)
 
   /* no more completion necessary */
   rl_completion_entry_function = (rl_compentry_func_t *)pal_rl_no_match;
+
+  /* clean up */
+  if (first_file_from_conf != NULL)
+    g_free (first_file_from_conf);
 
   return filename;
 }
