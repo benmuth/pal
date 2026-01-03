@@ -66,7 +66,6 @@ install-bin:
 	@echo " --- Installing binary --- "
 	@mkdir -p ${DESTDIR}${prefix}/bin;
 	install -m 0755 pal ${DESTDIR}${prefix}/bin;
-	install -m 0755 convert/vcard2pal ${DESTDIR}${prefix}/bin;
 	@echo
 
 install-share:
@@ -90,7 +89,6 @@ install-man:
 	cd ../; sed 's/PAL_VERSION/$(PAL_VERSION)/' pal.1.template | gzip -9 > pal.1.gz
 	@mkdir -p ${DESTDIR}${prefix}/share/man/man1/
 	install -m 0644 ../pal.1.gz ${DESTDIR}${prefix}/share/man/man1/
-	install -m 0644 convert/vcard2pal.1 ${DESTDIR}${prefix}/share/man/man1/
 	rm ../pal.1.gz
 	@echo
 
@@ -176,7 +174,6 @@ dist:
 	cp Makefile ChangeLog INSTALL COPYING pal.spec.template pal.1.template pal.conf pal-$(PAL_VERSION); \
 	sed 's/Version:.*/Version: $(PAL_VERSION)/' pal.spec.template > pal-$(PAL_VERSION)/pal-$(PAL_VERSION).spec; \
 	cp src/*.[ch] src/Makefile src/Makefile.defs pal-$(PAL_VERSION)/src; \
-	cp src/convert/*.[ch] src/convert/vcard2pal{,.1} src/convert/Makefile pal-$(PAL_VERSION)/src/convert; \
 	cp doc/example.css pal-$(PAL_VERSION)/doc; \
 	cp share/*.pal pal-$(PAL_VERSION)/share; \
 	@echo
